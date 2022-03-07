@@ -1,0 +1,367 @@
+\documentclass[a4paper,18pt]{extarticle}
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{ragged2e}
+\usepackage{amsmath}
+
+\setlength{\parindent}{0em}%indentazione paragrafo
+\setlength{\parskip}{1em}%spazio tra paragrafi
+\renewcommand{\baselinestretch}{1.3}%interlinea
+
+\geometry{
+    left=20mm,
+    right=20mm
+}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=blue,      
+    urlcolor=blue,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Federico Calò}
+\lhead{Appunti di Metodi Avanzati di Programmazione}
+\cfoot{  \thepage }
+
+\title{Appunti di Metodi Avanzati di Programmazione}
+\author{\href{http://www.federicocalo.it}{Federico Calò} }
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\newpage
+
+\tableofcontents
+
+\newpage
+\section{ Premessa}
+Appunti dell'esame di Metodi Avanzati di Programmazione che tratta argomenti di OOP e Java. Se trovate degli errori siete pregati di segnalarli. Trovate tutte le informazioni sul mio sito \href{http://www.federicocalo.it}{www.federicocalo.it}
+
+\newpage
+\section{ Introduzione}
+
+La scienza del software studia il passaggio dal \textbf{"cosa"} al \textbf{"come"}. L'estremo \textbf{"cosa"} raccoglie gli obiettivi, i desideri e i bisogni dell'utente, la sua conoscenza del dominio del problema, espressi nel linguaggio naturale. L'estremo \textbf{"come"}, invece, è l'hardware che può raggiungere quegli obiettivi e soddisfare i bisogni e i desideri in modo estremamente procedurale e rigorosamente sequenziale. Per plasmare il processo di analisi, procettazione e sviluppo di uun programma sono nati diversi paradigmi di programmazione. Questi modelli concettuali strutturano il pensiero in quanto determinano la forma di programmi validi. Essi influenzano il modo in cui pensiamo e formuliamo le soluzioni, arivando a condizionare perfino la possibilità di trovare una soluzione.
+
+Ogni linguaggio di programmazione supporta un particolare paradigma fornendo:
+
+\begin{itemize}
+  \item Le \textbf{primitive} di quel paradigma
+  \item I \textbf{metodi di composizione} di quel paradigma
+  \item Un \textbf{linguaggio utente appropriato} che rende chiari i programmi scritti secondo quel paradigma
+  \item Una \textbf{esecuzione efficiente} di programm scritti in quello stile.
+\end{itemize}
+
+I linguaggi di programmazione sono dotati di opportuni costrutti linguistici che riflettono i modelli concettuali di un paradigma, al fine di facilitare l'espressione di una soluzione definita attraverso i modelli concettuali del paradigma. In realtà, i linguaggi di programmazione possono supportare più di un paradigma.
+
+I paradigmi che supportano la programmazione ad alto livello possono essere raggruppati in base al loro approccio alla soluzione de problemi:
+\begin{itemize}
+  \item \textbf{Approccio operazionale}: descrive per passi come costruire una soluzione
+  \item \textbf{Approccio dimostrazionale}: è una variante del precedente che illustra la soluzione in modo operativo per esempi specifici e lasca al sistema il compito di generalizzare queste soluzioni di esempi ad altri casi
+  \item\textbf{Approccio definizionale}: esso stabilisce delle proprietà della soluzione in modo da vincolarla senza per questo descrivere come viene calcolata.
+\end{itemize}
+
+Nessun paradigma è appropriato per tutti i problemi. Le applicazioni complesse necessitano l'adozione di più paradigmi di programmazione. Ogni singolo paradigma di progrmmazione è caratterizzato da:
+\begin{itemize}
+  \item Un diverso \textbf{potere di elisione}, cioè capacità di esprimere qualcosa in modo conciso. 
+  \item Una diversa \textbf{invarianza rispetto ai cambiamenti} apportati nella strategia di soluzione di un problema. 
+\end{itemize}
+
+Occorre empre bilanciare i costri dovuti all'uniformità di paradigma con i costi determnati dall'uso di diversi paradigmi per un medesimo problema. I costi sono:
+\begin{itemize}
+  \item Costi iniziali di apprenimento
+  \item Costi continuati di debugging
+  \item Costi di varazione dovuti all'evoluzione del programma
+  \item Costi di esecuuzione dell'applicazione
+\end{itemize}
+
+I \textbf{paradigmi operazionali} sono caratterizzati da sequenze computazionali passo-passo. E' difficile stabilire se linsieme dei valori calcolati operativamente è proprio l'insime dei valori soluzione. Le tecniche di \textbf{verufica} e di \textbf{debugging} cercano di superare questo problema di programmazione. Questi paradigmi operazionali si distinguono in:
+
+\begin{itemize}
+  \item \textbf{Side-effecting}: procedono modificando ripetutamente la loro rappresentazione dei dati
+  \item \textbf{Non-side-effecting}: preocedono cerando continuamente nuovi dati. Questi paradigmi includono quelli che tradizionalmente sono detti funzionali.
+\end{itemize}
+
+Inoltre i paradigmi operazionali con effetti collaterali si distinguuono in:
+
+\begin{itemize}
+  \item Imperativi
+  \item Orientati agli oggetti
+\end{itemize}
+
+Inoltre in base al tipo di flusso di controllo, possiamo distinguere i paradigmi in:
+\begin{itemize}
+  \item Sequenziale: il flusso di controllo è unico
+  \item Concorrente o parallelo: quando sono ammessi più flussi di controllo
+\end{itemize}
+
+\newpage
+
+\section{ Astrazione nella progettazione}
+
+Astrarre deriva dal latino e signica "tirare via". Nella progettazione generalmente l'astrazione riguarda il cambiamento della rappresentazione di un problema, con l'obiettivo di concentrarsi su aspetti rilevanti, dimenticando gli elementi incidentali. Sia ben chiaro, non si tratta di \textbf{omettere} parti della rappresentazione di un problema, ma di \textbf{riformulare} lo stesso concetrando la propra attenzione su idee generali piuttosto che su manifestazioni specifiche di qulle idee, tenendo conto della prospettiva di un osservatore. Quindi l'astrazione si focalizza sull caretteristiche essenziali di un oggetto rispetto alla prospettiva di colui che lo osserva.
+
+Il termine atrazione sotto-intende:
+\begin{itemize}
+  \item \textbf{Un processo}: l'estrazione delle informazioni essenziali e rilevanti per un particolare scopo, ignorando il resto dell'informazione.
+  \item \textbf{Un entità}: una descrizione semplificata di un sistema che enfatizza alcun dei dettagli o proprietà trascurandone altri.
+\end{itemize}
+
+Nell'analisi dei sistemi un'astrazione è una descrizione semplificata del sistema, che enfatizza alcuni dettagli o proprietà essenziali del sistema mentre ne ignora altri estranei.
+
+Nella programmazione l'astrazione allude alla distinzione che si fa tra:
+\begin{itemize}
+  \item \textbf{cosa} fa un pezzo di codice
+  \item \textbf{come} esso è implementato
+\end{itemize}
+Per l'utente edl codice lìessenziale è cosa fa il codice mentre non è interessato ai dettagli dell'implementazione.
+
+I sistemi software diventano sempre più complessi. Per padroneggiare la complessità è necessario concentrarsi solo sui pochi aspetti che più interessano in un crto contesto ed ignorare i restanti. L'\textbf{astrazione} permette ai progettisti di sistemi software di risolvere problemi compessi in modo organizzato e gestibile.
+
+L'\textbf{astrazione funzionale} si riferisce alla progettazione del software, e in particolare alla possibilità di specificare un modulo software che trasforma dei dati di input in dati di output nascondendo i dettagli algoritmici della trasformazione. Quindi il consumatore conosce solo le corrette convenzioni i chiamata, \textbf{specifica sitnattica}, e cosa fa il modulo, \textbf{specifica semantica}, inoltre deve fidarsi del risultato.
+
+La specifica sintattica indica il nome del modulo, il tipo di dato che riceve in input e il tipo di risultato, in moo da permettere la corretta chiamata del modulo. Ad esempio: $diff(intero, intero)\rightarrow float$
+
+La specifica semantica indica la trasformazione operata, cioè la funzione calcolata:
+
+$diff(a, b) = 
+\begin{cases}  
+\frac{a}{b} \quad\quad\quad\quad\quad\quad\quad\quad b>1\\
+Impossibile   \quad \quad \quad Altrimenti
+
+\end{cases}$
+
+Come la trasformazione è calcolata non è noto al fruitore.
+
+
+Per specificare la semantica di un modulo i può esprimere attraverso due predicati la relazione che lega i dati di ingresso ai dati di uscita. Se il primo predicato, chiamato \textbf{precondizione}, è vero sui dati di ingresso e se il programma termina su quei dati, allora il secondo predicato, chiamato \textbf{postcondizione} è vero sui dati di uscita. Queste specifiche semantiche sono dette assiomatiche.
+
+Lo \textbf{Stepwise Refinement} o \textbf{Top-down Programming} è una metodologia che mira a costruire i programmi progredendo dal generale al particolare. Per risolvere un problema K si procede come segue:
+\begin{enumerate}
+    \item Si decompone il compito K in sottocompiti $K_1, K_2, \dots, K_n$
+    \item Si ipotizza di disporre di moduli $M_1, M_2, \dots, M_n$ che effettuano le trasformazioni richieste rispettivamente da $K_1, K_2, \dots, K_n$
+    \item Si compone un modulo M che assolve al compito P usando i moduli $M_1, M_2, \dots, M_n$
+    \item Si applica ricorsivamente la metodologia ai sottocompiti $K_1, K_2, \dots, K_n$ al fine di definre la realizzazione di $M_1, M_2, \dots, M_n$ fino a quando non si ottengono sottocompiti considerati elementari o non ulteriormente decomponibili.
+\end{enumerate}
+
+Secondo questa metologia il programmatore è libero di assumere l'esistenza di qualsiasi modulo che si può applicare al particolare sottocompito e di cui fornisce una specifica, salvo dover poi specificare come quel modulo va realizzato.
+
+L'astrazione funzionale presenta diversi limiti. I dettagli relativi alla rappreentazione dei dati di input e output devono essere conosciuti da chi poi andrà a realizzare il modulo. La rappresentazione è solitamente condivisa fra diversi moduli, per cuui i cambiamenti apportati alla rappresentazione dei dati in input/output a un modulo si possono ripercuotere su moli altri moduli. L'astrazione funzionale non permette di sviluppare soluzioni invarianti ai cambiamenti nei dati. Questo rende difficoltosa la manutenzione delle soluzioni progettate.
+
+\newpage
+
+\section{ Astrazione dati e Specifiche}
+
+Alla base dell'\textbf{Astrazione dati} c'è il principio che non si può accedere direttamente alla rappresentazione di un dato, qualunque esso sia, ma solo attraverso un insieme di operazioni considerate lecite. Un enorme vantaggio di questo principi è il fatto che un cambiamento nella rappresentazione del dato si ripercuoterà solo sulle operazioni lecite che potrebbero subire delle modifiche, mentre non inficerà il codice che utilizza il dato astratto.
+
+In generale un principio i astrazione suggerisce di \textbf{occultare l'informazione} (information hiding) sulla rappresentazione del dato, sia perchè non necessaria al fruitore dell'entità astratta, sia perchè la sua rivelazione creerebbe delle inutili dipendenze chhe comprometterebbero l'invarianza ai cambiamenti. 
+
+L'incapsulamento è una tecnca di progettazione consistente nell'impacchettare una collezione di entità, creandone una barriera concettuale. Come l'strazione, l'incapsulamento sottointende:
+
+\begin{itemize}
+  \item \textbf{un processo}: l'impacchettamento
+  \item \textbf{una entità}: il pacchetto ottenuto
+\end{itemize}
+
+L'incapsulameto non indica come devono essere le pareti del pacchetto, che potranno essere:
+\begin{itemize}
+  \item \textbf{trasparenti}: permettendo di vedere tutto ciò che è stato impacchettato;
+  \item \textbf{traslucide}: permettendo di vedere in modo parziale il contenuto
+  \item \textbf{opache}: nascondendo tutto il contenuto del pacchetto
+\end{itemize}
+
+Facciamo un piccolo confronto tra l'astrazione dati e l'astrazione funzionale. L'astrazione dati ricalca ed estende quella funzionale. L'astrazione funzionale stimola gli sforzi per evidenziare operazioni ricorrenti o comunque ben caratterizzate all'interno della soluzione di un dato problema. L'astrazione di dati sitmola di più gli sforzi per individuare le organizzazioni dei dati più consone alla soluzion del problema.
+
+Quando si esegue l'astrazione e l'incapsulamento dei dati, l'isolamento dei mouli non può essere totale. La specifica descrive come si può interagire con un dato astratto. L'astrazione deve dividere quelli che sono gli interessi degli utennti, interessati a cosa si astrae, e gli interessi degli implementatori, interessati a come si realizza. Per questa ragione una definizione di astrazione ha sempre due componenti: una specifica e una realizzazione.
+
+Per descrivere una specifica occorre ricorrere a dei linguaggi di specifica, che sono diversi dai linguaggi usati per descrivere la realizzazione delle astrazioni. La specifica potrà essere:
+\begin{itemize}
+  \item \textbf{sintattica}: stabilisce quali identificatori sono associati all'astrazione
+  \item \textbf{semantica}: definisce il risultato della computazione inclusa nell'estrazione.
+\end{itemize}
+
+L'efficacia di un'astrazione può essere migliorata mediante l'uso di parametri per la comunicazione con l'ambiente esterno. Quando un'astrazione è chiamata, ciascun parametro formale verrà associato in qualche modo al corrispondente argomento. I meccanismi utilizzati per realizzare queste associazioni sono fondamentalmente due:
+\begin{itemize}
+  \item \textbf{meccanismi di copia}: copiano il valore da passare
+  \item \textbf{meccanismi definizionali}: legano direttamente il parametro formale alla definizione dell'argomento passato.
+\end{itemize}
+
+Anche un'astrazione dati, come qualunque astrazione, è costituita da una specifica e una realizzazione:
+\begin{itemize}
+  \item La \textbf{specfica} consente di descrivere un nuovo dato e gli operatori che ad esso sono applicabili
+  \item La \textbf{realizzazione} stabilisce come il nuovo dato e i nuovi operatori vengono ricondotti ai dati e agli operatori già disponibili.
+\end{itemize}
+ Chi utilizzerà questi dati con i nuovi operatori nella scrittura dei suoi programmi sarà tenuto a conoscere la specifica dell'astrazione dei dati, ma potrà astrarre dalle tecniche utilizzate per la realizzazione.
+ 
+ I linguaggi di specifica per le astrazioni dati più noti sono le \textbf{specfiche assiomatiche}, che utilzzano un linguaggio logico-matematico usato nelle asserzioni, e le \textbf{specifche algebriche}, che utilizzano il linguaggio dell'algebra usato nelle equazioni deinite fra gli operatori specificati nel dato astratto.
+ 
+ Le specifiche assiomatiche dei dati astratti sono costituite da asserzioni, costituite da una specifica sintattica detta anche \textbf{segnatura}, la quale fornisce l'elenco dei nomi dei domini  e delle operazioni specifiche del tipo e i domini di partenza e di arrivo per ogni nome di operatore, e una specifica \textbf{semantica}, la quale associa un insieme ad ogni nome di tipo introdotto nella specifica sintattica e una funzione ad ogni nome di operatore, esplicitando le condizioni sui domini di partenza e di arrivo.
+ 
+ Il metodo di specifica assiomatica è preciso nella definizione della specifica sintattica, metnre è piuttosto informale per gli altri aspetti, pertanto non consente di caratterizzare precisamente un tipo astratto. Inoltre non consente di definire i valori che possono essere generati mediante l'applicazione di operatori e non consente di stabilire quando l'applicazione di diverse sequenze di operatori porta al medesimo valore.
+ 
+ Le specifiche algebriche si basano sull'algebra, piuttoto che sulla logica. Essenzialmente definiscono un dato astratto come un'algbra eterogenea, ovvero come una collezione di diversi insiemi su cui sono definite diverse operazioni. Una specifica algebrica consiste in tre parti:
+ 
+ \begin{enumerate}
+    \item \textbf{Sintattica}: elenca i nomi del tipo, le sue operazioni e il tipo degli argomenti delle operazioni. Se un'operazione è una funzione allora è specificato il codominio della funzione.
+    \item \textbf{Semantica}: consiste in un insieme di equazioni algebriche che descrivono in modo indipendente dalla rappresentazione le proprietà delle operazioni.
+    \item \textbf{Di restrizione}: stabilisce varie condizioni che devono essere soddisfatte o prma che siano applicate le operazioni o dopo che esse siano state completate.
+\end{enumerate}
+
+Uno desgli aspetti più interessanti delle specifiche algebriche è la semplicità del linguaggio di specifica rispetto ai linguaggi di programmazione procedurale.
+
+Scrivere delle specifiche semantiche complete, consistenti e non ridondanti può non essere semplice. Per facilitare il compito si è introdotta una metodologia che si basa sulla distinzione degli operatori di un dato astratto in \textbf{costruttori}, che creano o istanziano il dato, e \textbf{osservazioni}, che ritrovano informazioni sul dato astratto.
+
+Il comportamento di un'astrazione dati può essere specificata riportando il valore di ciascuna osservazione applicata a ciascun costruttore. Questa informazione è organizzata in modo naturale in una matrice, con i costruttori lungo una dimensione e le osservazioni lungo l'altra.
+
+Definiamo inoltre \textbf{osservazioni unarie} che osservano un singolo valore del dato astratto. Alcune volte è necessario creare delle osservazioni più complesse che osservano due istanze del dato astratto per confrontare due valori. In queto caso il valore dell'osservazione deve essere definito per tutte le combinazioni di costruttori possibili per i valori astratti che si devono confrontare.
+
+In una osservazione, per edfinire  costruttori si utilizza generalmente il criterio di minimalità, cioè l'isieme dei costruttori deve essere il più piccolo insime di operatori necessario a costruire tutti i possibili valori per un certo dato astratto. Inoltre gli argomenti di un costruttore non devono essere tutti dello stesso sort del dato astratto.
+
+\newpage
+
+\section{ Astrazione nella pogrammazione}
+
+L'applicazione dei principi di astrazione nella fase progettuale sarebbe poco efficace se poi nella fase di realizzazione non fosse possibile continuare a nascondere l'informazione. Pertanto è indispensabile che i liguaggi di prorammazione, che costituiscono l principale strumento utilizzato in fase di realizzazione, supportino l'applicazione dei principi di astrazione al dine di agevolare lo sviluppo e la manutenzione di sistemi software sempre più complessi.
+
+In linea di principio, ogni \textbf{linguaggio simbolco} offre di per se una forma dias trazione dalla particolare macchina. Il principio dell'astrazione applicato nel progetto dei linguaggi assemblativi fu quello di nascondere i dettagli di codifica di istruzioni e indirizzi di memoria. I \textbf{linguaggi ad alto livello} sono caratterizzati dalla possibilità di trattare particolari domini di valori indipendentemente dalla loro rappresentazione in memoria centrale, introducendo strutture di controllo astratte  e dei nuovi operatori non previsti a livello di linguaggio macchina.
+
+E' possibile costruire astrazioni su una qualunque classe sintattica, purchè le frasi di quella classe specifichino un qualche tipo di computazione. Possiamo avere diversi tipi di astrazione:
+\begin{enumerate}
+    \item astrazione di funzione, che include un'espressione da valutare 
+    \item astrazione di procedura, include un comando da eseguire
+    \item astrazione di controllo, include delle espressioni di controllo ell'orine di esecuzione delle istruzioni
+    \item astrazione di selettore, include il calcolo dell'accesso ad una variabile
+    \item astrazione de tipo, include un gruppo di operatori che definiscono implicitamente un insieme i valori
+    \item astrazione generica, inclued una frase che sarà elaborata per produrre legami.
+\end{enumerate}
+
+Un'\textbf{astrazione di funzione} include un'espressione da valutare e che darà un valore come risultato quando viene chiamata. La definizione di funzione è del tipo:
+
+\begin{center}
+    $function \quad I(FP_1;\dots;FP_n) \quad is\quad E$
+\end{center}
+
+Dove I è un identificatore, $FP_1;\dots;FP_n$ sono parametri formali e E è l'espressione da valutare. In questo modo si lega I a un'entità, l'astrazione di funzione, che ha la proprietà di dare un rsultato ogni qualvolta è chiamata con argomenti appropriati. Una chiamata di funzione ha due punti di vista:
+\begin{itemize}
+  \item Punto di vista dell'\textbf{utente}: la chiamata i una funzion trasforma gli argomenti in un risultato;
+  \item Punto di vista dell'\textbf{implementatore}: la chiamata valuta E, avendo precedentemente vincolato i parametri formali agli argometi corrispondenti.
+\end{itemize}
+
+In alcuni linguaggi di programmazione, le funzioni sono di \textbf{terza classe}, cioè possono essere solo chiamate, in altri sono di \textbf{seconda classe}, cioè possono essere passate come argometi, mentre i altri linguaggi di programmazione esse sono di \textbf{prima classe} in quanto possono essere anche restituite come risultato della chiamata di altre funzioni o possono essere assegnate come valore a una variabile.
+
+In generale, in programmazione una qualunque entità si dice \textbf{cittadino di prima classe} quando non è soggetta a restrizioni nel suo utilizzo. I valori possono essere \textbf{denotabili}, se possono essere associati ad un nome, \textbf{esprimibili}, se possono essere il risultato di un'espressione complessa, o \textbf{memorizzabili}, se possono ssere memorizzati in una variabile.
+
+Un'\textbf{astrazione di procedura} include un comando da eseguire e quando chiamata aggiornerà le variabili che rappresentano lo stato del sistema. E' definita mediante una definizione del tipo:
+
+\begin{center}
+    $procedure \quad I(FP_1;\dots;FP_n) \quad is\quad C$
+\end{center}
+
+Dove I è un identificatore, $FP_1;\dots;FP_n$ sono parametri formali e C è il blocco di comandi da eseguire. L'astrazione di procedura gode della proprietà di cambiare lo stato del sistema quando chiamata con argometi appropriati. Dal punto di vista dell'utente, la chaimata aggiorneràlo stato edl sistema in modo dipendente dai parametri, mentre il punto di vista dell'implemetatore è che la chiamata consentirà l'esecuzione del corpo di procedura C, avendo precedentemente vincolato i parametri formali agli argomenti corrispondenti.
+
+L'astrazione di funzione e di procedura sono due tecniche di programmazione di supporto all'\textbf{astrazione funzionale}, intesa coe tecnica di progettazione del software secondo la quale occorre dstinguere la specifica d un operatore dalla sua realizzazione.
+
+Quale sia la tecnica di programmazione più opportuna da adottare dipende sia dal tipo di operatore progettato, sia ai limiti imposti dal linguaggio di programmazione.
+
+Le strutture di controllo definiscono l'ordine in cui le singole istruzioni o i gruppi di istruzioni devono essere eseguiti. A queste strutture di controllo si applica l'\textbf{astrazione di controllo}. Il linguaggio macchina fornisce due semplici meccanismi per gestire il flusso di controllo delle istruzioni: il salto e l'elaborazione in sequenza. Nei linguaggi di alto livello sono state introdotte altre strutture di controllo, quali la selezione, l'iterazione, la ricorione e meccanismi per gestire situazioni eccezionali.
+
+Possiamo specificare un'astrazione di controllo come segue:
+
+\begin{center}
+    $control \quad I(FP_1;\dots;FP_n) \quad is\quad S$
+\end{center}
+
+Dove I è un identificatore, $FP_1;\dots;FP_n$ sono parametri formali e S è un'espressione di controllo che definisce un ordine di esecuzione.
+
+I linguaggi di programmazione sequenziale utilizzao la sequenza, la selezione e la ripartizione per definire un ordinamento totale sull'esecuzione dei comandi in un programma, mentre i linguaggi di programmazione parallel utilizzano altri costruttori del flusso di controllo come il fork, cobegin o cicli for paralleli, per introdurre in modo esplicito un orinamento parziale sull'esecuzione dei comandi.
+
+Si parla di \textbf{astrazione di selettore} quando un linguaggio di programmazione fornisce metodi per accedere alle variabili, strutturate e non. Possiamo definire un'astrazione di selettore come segue:
+
+\begin{center}
+    $selector \quad I(FP_1;\dots;FP_n) \quad is\quad A$
+\end{center}
+
+dove A è un'espressione che restituisce un accesso a una variabile.
+
+L'\textbf{espressione di tipo} è il costrutto con cui alcuni linguaggi di programmazione consentono di definire un nuovo tipo. Un'\textbf{astrazione di tipo} ha un corpo costituito da un'espressione di tipo. Quando è valutata, l'astrazione di tipo stabilisc sia una rappresentazione per un insieme di valori e ia le operazioni ad essi applicabili. L'astrazione di tipo può essere specificata come:
+\begin{center}
+    $type \quad I(FP_1;\dots;FP_n) \quad is\quad T$
+\end{center}
+
+dove I è un identificatore del nuovo tipo, $FP_1;\dots;FP_n$ sono i parametr formal, e T è un'espressione di tipo che specificherà la rappresentazione dei dati di tipo I e le operazioni a esso applicabili.
+
+Nei linguaggi imperativi, i valori di un tipo astratto venono trattati alla stessa maniera dei tipi concreti, sono entrambi \textbf{cittadini di prima classe}. Al contrario i valori rappresentati mediante gli oggetti sono trattati come cittadini di terza classe i quanto una procedura non può restituire l'istanza di un generic package e non è possibile creare dinamicamente degli oggetti. I tipi astratt sono utili in tutti i paradigmi di programmazione, mentre gli oggetti, essendo variabili aggiornabli, si adattano solo a un paradigma di programmazione side-effecting.
+
+Uno svantaggio dei tipi astratti sono la \textbf{scarsa estendibilità}, in quanto l'aggiunta di un nuovo costruttore comporta dei cambiamenti intrusivi nelle implementazioni esistenti degli operatori.
+
+L'\textbf{astrazione generica} è un'astrazione su una dichiarazione, pertanto il corpo della dichiarazione di un'astrazione generica è a sua volta una dichiarazione. La chiamata di un'astrazione generica è detta \textbf{istanziazione} e produce dei legami elaborando la dichiarazione contenuta nel corpo dell'astrazione generica. L'astrazione generica può essere specificata come:
+
+\begin{center}
+    $generic \quad I(FP_1;\dots;FP_n) \quad is\quad D$
+\end{center}
+
+dove D è una dichiarazione che quando elaborata produrrà dei legami. La dichiarazione può essere di diverso tipo: dichiarazione di un tipo, di un modulo, di una funzione, di una procedura. L'astrazione genrica è d supporto all'astrazione dati, in quanto permette di definire delle classi che sono invarianti ad alcuni tipi di dati necessai per definirle. Mediante i parametri di tipo, l'astrazione è applicabile a tipi astratti che possono essere così ugualmnte svincolati dalla necessità di specificare il tipo degli elementi sui quali operare. L'alternativa sarebbe quella di scrivere una definisione separata per ciascuno dei tipi, con conseguente codice duplicato, sforzo di programmazione ridondante e manutenzione complicata.
+
+\newpage
+
+\section{ Il Paradigma OOP}
+
+Nella programmazione imperativa le variabili globali sono accessibili da ogni parte del programma. I grandi programmi che non presentano una disciplina di accesso alle variabili globali risultano ingestibili perchè nessun modulo che accede ad una variabile globale può essere sviluppato e compreso indipendentemente da altri moduli che accedono alla medisima variabile. Agli inizi degli anni '70 si iniziò ad utilizzare l'information hiding come soluzione a questo problema, incapsulando in un modulo le variabili globali e le operazioni per accedervi. Gli altri moduli possono accedere alle variabili globali utilizzando esclusivamente le operazioni per accedervi. Questo rappresenta un primo passo verso la definizione degli oggetti.
+
+Nella programmazione imperativa è possibile definire oggetti, il cui utilizzo non è forzato ed è legato alla auto consapevolezza degli sviluppatori, inoltre non sono cittadini di prima classe. Possiamo quindi dire che il paradigma OO, rispetto al paradigma imperativo, costituisce un'evoluzione in quanto gli oggetti sono considerati cittadini i prima classe, e una rivoluzione, in quanto gli oggetti assumono un ruolo fondamentale nella progettazione e nella programmazione.
+
+Gli \textbf{oggetti} incapsulano uno stato, identificato dal contenuto di una certa area di memoria, e un comportamento, definito da una collezione di procedure e funzioni che possono operare sulla rappresentazione dell'area di memoria associata all'oggetto. All'interno del progetto, gli oggetti hanno la finalità di modellare le entità presenti nel dominio dell'applicazione. Ogni oggetto è costituito da un identificatore di oggetto che lo identifica univocamente. Tale identificatore è immutabile.
+
+Una \textbf{classe} è la descrizione di una famiglia di oggetti che condividono la stessa struttura e il medesimo comportamento. Nella programmazione Object Oriented, ogni oggetto è un'istanza di una classe, cioè un oggetto no può essere ottenuto se non si definisce la sua classe di appartenenza. Analogamente nella modellazione OO le istanze esistono in quanto ci sono le loro astrazioni.
+
+I dettagli di realizzazione della classe sono normalmente nascosti. Ogni classe ha una doppia componente: una \textbf{componente statica}, ovvro i dati, costituita da campi o attributi dotati di nome, che contengono un valore e caratterizzano lo stato degli oggtti durante l'esecuzione del programma, e una \textbf{componente dinamica}, ovvero i metodi, che rappresentano il comportamento comune degli oggetti appartenenti alla classe.
+
+In base all'ambito d'azione o \textbf{scope}, gli attributi si possono distinguere in:
+\begin{itemize}
+  \item \textbf{Attributi d'istanza} che sono associati ad un'istanza e hanno un tempo di vita pari a quello dell'istanza alla quale sono associati
+  \item \textbf{Attributi di classe} che sono associati alle classi e condivisi da tutte le istanze della classe.
+\end{itemize}
+
+I metodi si possono classificare come:
+\begin{itemize}
+  \item \textbf{Metodi costruttori}, invocati per creare gli oggetti e inizializzarli,
+  \item \textbf{Metodi di accesso}, che restituiscono astrazioni significative dello stato di un oggetto
+  \item \textbf{Metodi di trasformazione}, che modificano lo stato di un oggetto,
+  \item \textbf{Metodi distruttori}, invocati quando si rimuovono gli oggetti dalla memoria.
+\end{itemize}
+
+Un concetto fondamentale nel paradigma OO riguarda la visibilità di attributi e metodi, che soddisfa il concetto di incapsulamento citato precedentemente. Vi sono diversi livelli di \textbf{visibilità}:
+
+\begin{itemize}
+    \item \textbf{pubblica}, quando i metodi e gli attributi sono visibili da altre classi;
+    \item \textbf{privata}, quando i metodi e gli attributi sono visibili solo all'interno della classe di appartenenza;
+    \item \textbf{protetta}, quando i metodi e gli attributi sono visibili all'interno del package i cui è dichiarata la classe e dalle discendenti di questa anche se si trovano in altri package;
+    \item \textbf{package}, quando i metodi e gli attributi sono visibili sono agli elementi del package in cui la classe è definita.
+\end{itemize}
+
+Si definisce \textbf{molteplicità il classe} il numero di istanze che una classe può avere. Generalmente non si pone un limite, anche se in alcuni casi è necessario indicare che la classe può avere una sola istanza, e in questo caso viene definita \textbf{classe singoletto}, o comunque un numero ben definito di istanze.
+
+In una buona modellazione Object Oriented di un sistema software è necessario stabilire le responsabilità da attribuire a ciascuna classe individuata. Al fine di rendere il sistema altamente riutilizzabile, il alvoro di individuazione delle classi deve essere condotto in modo preciso. Alcuni consigli pratici per raggiungere tale scopo sono:
+\begin{itemize}
+    \item identificare gli elementi che gli utenti usano per descrivere il problema
+    \item per ogni astrazone individuata è necessario identificare un insieme di repsonsabilità
+    \item fornire ad ogni classe gli attributi e le operazioi di cui ha bisogno per eseguire tali repsonsabilità.
+\end{itemize}
+
+Definiamo la relazione \textbf{instance of}, definita come relazione tra un oggetto e una classe per indicaer che l'oggetto è istanza di quella classe. La relazione fondamentale tra le classi è la \textbf{relazione di ereditarietà}. Partiamo dal presupposto che ogni classe è un insieme di conoscenze a partire dal quale si può definire classi più specifiche, che completano le conoscenze della class madre. Una sottoclasse è dunque una specializzazione di una classe detta superclasse, che eredita tutte le informazioni e le amplia, evitando in questo modo la duplicazione di codice. Esistono diverse forme di ereditarietà.
+
+Nell'\textbf{ereditarietà per estensione} la sottoclasse introduce delle caratteristiche non presenti nella superclasse e non applicabili a istanze della superclasse. La visibilità degli attributi e delle operazioni ereditate dalla superclasse non è modificata.
+
+Nell'\textbf{ereditarietà per variazione funzionale}
+
+
+\end{document}
