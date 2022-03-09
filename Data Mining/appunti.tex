@@ -21,6 +21,7 @@
     bottom=20mm
 }
 
+
 \hypersetup{
     colorlinks=true,
     linkcolor=blue,
@@ -45,6 +46,7 @@
 \maketitle
 \newpage
 \tableofcontents
+\voffset -30pt
 
 \newpage
 
@@ -109,7 +111,7 @@ La \textbf{seconda interpretazione} esplica come il data mining implica l'adatta
 
 Il kdd è un processo iterativo e interattivo, costituito da molti passaggi che includono molte decisione prese dall'utente.
 
-\begin{figure}[ht]
+\begin{figure}[h]
 \noindent
 \makebox[\textwidth]{\includegraphics[width=12cm]{kdd-process}}%
 \end{figure}
@@ -124,10 +126,10 @@ La maggior parte del lavoro nel KDD è focalizzata sullo step del data mining. A
 
 Il modello di processo CRISP-DM è per la scoperta i conoscenza consiste in sei fasi.
 
-\begin{figure}[h]
-\noindent
-\makebox[\textwidth]{\includegraphics[width=10cm]{crisp-dm-model}}%
-\end{figure}
+\fbox{\includegraphics[width=.4\textwidth, height=.3\textheight, keepaspectratio]{crisp-dm-model}}
+
+
+
 
 La sequenza delle fasi non è rigida. È possibile spostarsi avanti e indietro tra le diverse fasi a seconda dell'esito di ciascuna fase. Le frecce indicano le dipendenze più importanti/frequenti. Il cerchio esterno simboleggia la natura ciclica di un processo KDD che può continuare dopo l'implementazione di una soluzione. Ogni fase contiene un numero di task che produce specifici output.
 \subsubsection{Business Understanding}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 21.12) (preloaded format=pdflatex 2022.3.6)  7 MAR 2022 11:40
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 21.12) (preloaded format=pdflatex 2022.3.6)  8 MAR 2022 18:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -330,7 +330,7 @@ File: l3backend-pdftex.def 2021-10-18 L3 backend support: PDF output (pdfTeX)
 LaTeX Warning: Unused global option(s):
     [18pt].
 
-No file "Metodi avanzati di programmazione".aux.
+(Metodi avanzati di programmazione.aux)
 \openout1 = `"Metodi avanzati di programmazione.aux"'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 38.
@@ -353,6 +353,7 @@ LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 38.
 LaTeX Font Info:    ... okay on input line 38.
 LaTeX Info: Redefining \it@ocap on input line 38.
 LaTeX Info: Redefining \it@ccap on input line 38.
+
 
 File italian.ldf warning: 
 italian.ldf    With OT1 encoding guillemets are poorly faked
@@ -404,6 +405,8 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 38.
 LaTeX Info: Redefining \pageref on input line 38.
 LaTeX Info: Redefining \nameref on input line 38.
+ (Metodi avanzati di programmazione.out)
+(Metodi avanzati di programmazione.out)
 \@outlinefile=\write3
 \openout3 = `"Metodi avanzati di programmazione.out"'.
 
@@ -445,31 +448,25 @@ LaTeX Info: Redefining \nameref on input line 38.
 [1
 
 {C:/Users/fedca/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
+(Metodi avanzati di programmazione.toc)
 \tf@toc=\write4
 \openout4 = `"Metodi avanzati di programmazione.toc"'.
 
- [2]
-[3] [4] [5] [6] [7] [8] [9] [10] [11] [12] [13] [14] [15] [16] [17]
+ [2] [3] [4] [5] [6] [7] [8] [9]
+[10] [11] [12] [13] [14] [15] [16] [17] [18]
 (Metodi avanzati di programmazione.aux)
-
-Package rerunfilecheck Warning: File `"Metodi avanzati di programmazione".out' 
-has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `"Metodi avanzati di programmazione"
-.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  137810F1DD929D18A334A2040E4CEFEF;953.
+Package rerunfilecheck Info: File `"Metodi avanzati di programmazione".out' has
+ not changed.
+(rerunfilecheck)             Checksum: A45C167F220363EE5652358B67049232;958.
  ) 
 Here is how much of TeX's memory you used:
- 10688 strings out of 478659
- 171541 string characters out of 2845921
- 491294 words of memory out of 3000000
- 28640 multiletter control sequences out of 15000+600000
+ 10707 strings out of 478659
+ 172319 string characters out of 2845921
+ 491574 words of memory out of 3000000
+ 28650 multiletter control sequences out of 15000+600000
  408841 words of font info for 46 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 60i,13n,63p,876b,433s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 60i,13n,63p,992b,433s stack positions out of 5000i,500n,10000p,200000b,80000s
  <C:\Users\fedca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm
 1000.pk><C:/Users/fedca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfon
 ts/cm/cmbx10.pfb><C:/Users/fedca/AppData/Local/Programs/MiKTeX/fonts/type1/publ
@@ -483,10 +480,10 @@ edca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:
 /Users/fedca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.
 pfb><C:/Users/fedca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/c
 m/cmsy10.pfb>
-Output written on "Metodi avanzati di programmazione.pdf" (17 pages, 170935 byt
+Output written on "Metodi avanzati di programmazione.pdf" (18 pages, 181332 byt
 es).
 PDF statistics:
- 164 PDF objects out of 1000 (max. 8388607)
- 38 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 193 PDF objects out of 1000 (max. 8388607)
+ 39 named destinations out of 1000 (max. 500000)
+ 49 words of extra memory for PDF output out of 10000 (max. 10000000)
 
