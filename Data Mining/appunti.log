@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 21.12) (preloaded format=pdflatex 2022.3.6)  7 MAR 2022 11:58
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 21.12) (preloaded format=pdflatex 2022.3.6)  8 MAR 2022 21:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -6,10 +6,19 @@ entering extended mode
 (appunti.tex
 LaTeX2e <2021-11-15> patch level 1
 L3 programming layer <2021-11-22>
-(C:\Users\fedca\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
-Document Class: article 2021/10/04 v1.4n Standard LaTeX document class
+(C:\Users\fedca\AppData\Local\Programs\MiKTeX\tex/latex/extsizes\extarticle.cls
+Document Class: extarticle 1996/10/08 v1.0 Non Standard LaTeX document class
 (C:\Users\fedca\AppData\Local\Programs\MiKTeX\tex/latex/base\size10.clo
 File: size10.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
+)
+(C:\Users\fedca\AppData\Local\Programs\MiKTeX\tex/latex/base\exscale.sty
+Package: exscale 2018/09/24 v2.1i Standard LaTeX package exscale
+LaTeX Font Info:    Redeclaring symbol font `largesymbols' on input line 57.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/cmex/m/n --> OMX/cmex/m/n on input line 57.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/cmex/m/n --> OMX/cmex/m/n on input line 57.
+\big@size=\dimen138
 )
 \c@part=\count183
 \c@section=\count184
@@ -21,7 +30,7 @@ File: size10.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
 \c@table=\count190
 \abovecaptionskip=\skip47
 \belowcaptionskip=\skip48
-\bibindent=\dimen138
+\bibindent=\dimen139
 )
 (C:\Users\fedca\AppData\Local\Programs\MiKTeX\tex/latex/base\inputenc.sty
 Package: inputenc 2021/02/14 v1.3d Input encoding file
@@ -78,7 +87,7 @@ Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
 (C:\Users\fedca\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\kvoptions.sty
 Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
 )
-\@linkdim=\dimen139
+\@linkdim=\dimen140
 \Hy@linkcounter=\count191
 \Hy@pagecounter=\count192
  (C:\Users\fedca\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\pd1enc.def
@@ -117,7 +126,7 @@ Package hyperref Info: Bookmarks ON on input line 4445.
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 4804.
-\XeTeXLinkMargin=\dimen140
+\XeTeXLinkMargin=\dimen141
 
 (C:\Users\fedca\AppData\Local\Programs\MiKTeX\tex/generic/bitset\bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
@@ -128,8 +137,8 @@ Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
 )
 ))
 \Fld@menulength=\count195
-\Field@Width=\dimen141
-\Fld@charsize=\dimen142
+\Field@Width=\dimen142
+\Fld@charsize=\dimen143
 Package hyperref Info: Hyper figures OFF on input line 6076.
 Package hyperref Info: Link nesting OFF on input line 6081.
 Package hyperref Info: Hyper index ON on input line 6084.
@@ -182,14 +191,14 @@ Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 \Gm@cnth=\count267
 \Gm@cntv=\count268
 \c@Gm@tempcnt=\count269
-\Gm@bindingoffset=\dimen143
-\Gm@wd@mp=\dimen144
-\Gm@odd@mp=\dimen145
-\Gm@even@mp=\dimen146
-\Gm@layoutwidth=\dimen147
-\Gm@layoutheight=\dimen148
-\Gm@layouthoffset=\dimen149
-\Gm@layoutvoffset=\dimen150
+\Gm@bindingoffset=\dimen144
+\Gm@wd@mp=\dimen145
+\Gm@odd@mp=\dimen146
+\Gm@even@mp=\dimen147
+\Gm@layoutwidth=\dimen148
+\Gm@layoutheight=\dimen149
+\Gm@layouthoffset=\dimen150
+\Gm@layoutvoffset=\dimen151
 \Gm@dimlist=\toks19
 
 (C:\Users\fedca\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.cfg))
@@ -224,8 +233,8 @@ Package graphics Info: Driver file: pdftex.def on input line 107.
 (C:\Users\fedca\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\pdftex.def
 File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
 ))
-\Gin@req@height=\dimen151
-\Gin@req@width=\dimen152
+\Gin@req@height=\dimen152
+\Gin@req@width=\dimen153
 )
 (C:\Users\fedca\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amssymb.sty
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
@@ -265,12 +274,12 @@ Package: relsize 2013/03/29 ver 4.1
 \skiplength=\skip65
 \algomargin=\skip66
 \skipalgocfslide=\skip67
-\algowidth=\dimen153
-\inoutsize=\dimen154
-\inoutindent=\dimen155
-\interspacetitleruled=\dimen156
-\interspacealgoruled=\dimen157
-\interspacetitleboxruled=\dimen158
+\algowidth=\dimen154
+\inoutsize=\dimen155
+\inoutindent=\dimen156
+\interspacetitleruled=\dimen157
+\interspacealgoruled=\dimen158
+\interspacetitleboxruled=\dimen159
 \algocf@ruledwidth=\skip68
 \algocf@inoutbox=\box50
 \algocf@inputbox=\box51
@@ -300,7 +309,7 @@ Package: longtable 2021-09-01 v4.17 Multi-page Table package (DPC)
 \LTpre=\skip80
 \LTpost=\skip81
 \LTchunksize=\count275
-\LTcapwidth=\dimen159
+\LTcapwidth=\dimen160
 \LT@head=\box58
 \LT@firsthead=\box59
 \LT@foot=\box60
@@ -317,14 +326,14 @@ Package: caption 2022/02/20 v3.6 Customizing captions (AR)
 
 (C:\Users\fedca\AppData\Local\Programs\MiKTeX\tex/latex/caption\caption3.sty
 Package: caption3 2022/01/07 v2.3 caption3 kernel (AR)
-\caption@tempdima=\dimen160
-\captionmargin=\dimen161
-\caption@leftmargin=\dimen162
-\caption@rightmargin=\dimen163
-\caption@width=\dimen164
-\caption@indent=\dimen165
-\caption@parindent=\dimen166
-\caption@hangindent=\dimen167
+\caption@tempdima=\dimen161
+\captionmargin=\dimen162
+\caption@leftmargin=\dimen163
+\caption@rightmargin=\dimen164
+\caption@width=\dimen165
+\caption@indent=\dimen166
+\caption@parindent=\dimen167
+\caption@hangindent=\dimen168
 Package caption Info: Standard document class detected.
 )
 \c@caption@flags=\count280
@@ -334,8 +343,11 @@ Package caption Info: longtable package is loaded.
 
 (C:\Users\fedca\AppData\Local\Programs\MiKTeX\tex/latex/caption\ltcaption.sty
 Package: ltcaption 2021/01/08 v1.4c longtable captions (AR)
-))
-Package hyperref Info: Option `colorlinks' set `true' on input line 30.
+)) (C:\Users\fedca\AppData\Local\Programs\MiKTeX\tex/latex/lastpage\lastpage.st
+y
+Package: lastpage 2021/09/03 v1.2n Refers to last page's name (HMM; JPG)
+)
+Package hyperref Info: Option `colorlinks' set `true' on input line 31.
 
 (C:\Users\fedca\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdf
 tex.def
@@ -345,24 +357,24 @@ File: l3backend-pdftex.def 2021-10-18 L3 backend support: PDF output (pdfTeX)
 ) (appunti.aux)
 \openout1 = `appunti.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
 
 (C:\Users\fedca\AppData\Local\Programs\MiKTeX\tex/latex/graphics\color.sty
 Package: color 2021/10/11 v1.3b Standard LaTeX Color (DPC)
@@ -372,7 +384,7 @@ File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package color Info: Driver file: pdftex.def on input line 149.
 )
-Package hyperref Info: Link coloring ON on input line 41.
+Package hyperref Info: Link coloring ON on input line 44.
  (C:\Users\fedca\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
 
@@ -385,9 +397,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count283
 )
-LaTeX Info: Redefining \ref on input line 41.
-LaTeX Info: Redefining \pageref on input line 41.
-LaTeX Info: Redefining \nameref on input line 41.
+LaTeX Info: Redefining \ref on input line 44.
+LaTeX Info: Redefining \pageref on input line 44.
+LaTeX Info: Redefining \nameref on input line 44.
  (appunti.out) (appunti.out)
 \@outlinefile=\write3
 \openout3 = `appunti.out'.
@@ -402,11 +414,11 @@ LaTeX Info: Redefining \nameref on input line 41.
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
 * modes: 
 * h-part:(L,W,R)=(28.45274pt, 540.60239pt, 28.45274pt)
-* v-part:(T,H,B)=(101.40665pt, 715.18745pt, 28.45274pt)
+* v-part:(T,H,B)=(101.40665pt, 686.7347pt, 56.9055pt)
 * \paperwidth=597.50787pt
 * \paperheight=845.04684pt
 * \textwidth=540.60239pt
-* \textheight=715.18745pt
+* \textheight=686.7347pt
 * \oddsidemargin=-43.81725pt
 * \evensidemargin=-43.81725pt
 * \topmargin=-7.86334pt
@@ -414,7 +426,7 @@ LaTeX Info: Redefining \nameref on input line 41.
 * \headsep=25.0pt
 * \topskip=10.0pt
 * \footskip=30.0pt
-* \marginparwidth=65.0pt
+* \marginparwidth=57.0pt
 * \marginparsep=11.0pt
 * \columnsep=10.0pt
 * \skip\footins=9.0pt plus 4.0pt minus 2.0pt
@@ -432,13 +444,13 @@ LaTeX Info: Redefining \nameref on input line 41.
 ii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count284
-\scratchdimen=\dimen168
+\scratchdimen=\dimen169
 \scratchbox=\box64
 \nofMPsegments=\count285
 \nofMParguments=\count286
 \everyMPshowfont=\toks22
 \MPscratchCnt=\count287
-\MPscratchDim=\dimen169
+\MPscratchDim=\dimen170
 \MPnumerator=\count288
 \makeMPintoPDFobject=\count289
 \everyMPtoPDFconversion=\toks23
@@ -455,12 +467,15 @@ File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 44.
+Package lastpage Info: Please have a look at the pageslts package at
+(lastpage)             https://www.ctan.org/pkg/pageslts
+(lastpage)             ! on input line 44.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 46.
 
  (C:\Users\fedca\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 44.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 46.
 
 
 (C:\Users\fedca\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
@@ -473,35 +488,36 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 \tf@toc=\write4
 \openout4 = `appunti.toc'.
 
- [2]
-Underfull \hbox (badness 10000) in paragraph at lines 79--82
-
- []
-
-[3]
-<kdd-process.png, id=32, 853.1875pt x 482.80376pt>
+ [2] [3]
+<kdd-process.png, id=52, 853.1875pt x 482.80376pt>
 File: kdd-process.png Graphic file (type png)
 <use kdd-process.png>
-Package pdftex.def Info: kdd-process.png  used on input line 112.
+Package pdftex.def Info: kdd-process.png  used on input line 114.
 (pdftex.def)             Requested size: 341.43306pt x 193.21385pt.
  [4 <./kdd-process.png>]
-<crisp-dm-model.jpg, id=39, 637.38126pt x 603.25375pt>
+<crisp-dm-model.jpg, id=59, 637.38126pt x 603.25375pt>
 File: crisp-dm-model.jpg Graphic file (type jpg)
 <use crisp-dm-model.jpg>
-Package pdftex.def Info: crisp-dm-model.jpg  used on input line 125.
+Package pdftex.def Info: crisp-dm-model.jpg  used on input line 129.
 (pdftex.def)             Requested size: 284.52756pt x 269.28932pt.
- [5 <./crisp-dm-model.jpg>] [6] (appunti.aux)
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[5] [6 <./crisp-dm-model.jpg>] [7] [8] [9] 
+AED: lastpage setting LastPage
+[10] (appunti.aux)
 Package rerunfilecheck Info: File `appunti.out' has not changed.
-(rerunfilecheck)             Checksum: 355EE765613AE2921CC21F9DC443B3FC;101.
+(rerunfilecheck)             Checksum: 6510DFB2FD1F30D33E5FCF93688B0DC5;719.
  ) 
 Here is how much of TeX's memory you used:
- 11973 strings out of 478659
- 196113 string characters out of 2845921
- 497376 words of memory out of 3000000
- 29920 multiletter control sequences out of 15000+600000
- 411680 words of font info for 59 fonts, out of 8000000 for 9000
+ 12081 strings out of 478659
+ 200187 string characters out of 2845921
+ 501731 words of memory out of 3000000
+ 30011 multiletter control sequences out of 15000+600000
+ 412333 words of font info for 61 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 60i,13n,63p,1376b,385s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 60i,12n,63p,1376b,448s stack positions out of 5000i,500n,10000p,200000b,80000s
  <C:\Users\fedca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm
 1000.pk><C:/Users/fedca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfon
 ts/cm/cmbx10.pfb><C:/Users/fedca/AppData/Local/Programs/MiKTeX/fonts/type1/publ
@@ -511,10 +527,12 @@ TeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/fedca/AppData/Local/Pro
 grams/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/fedca/AppData/L
 ocal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/fedca/A
 ppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users
-/fedca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on appunti.pdf (6 pages, 179432 bytes).
+/fedca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><
+C:/Users/fedca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmt
+i10.pfb>
+Output written on appunti.pdf (10 pages, 215926 bytes).
 PDF statistics:
- 91 PDF objects out of 1000 (max. 8388607)
- 11 named destinations out of 1000 (max. 500000)
- 19 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 136 PDF objects out of 1000 (max. 8388607)
+ 19 named destinations out of 1000 (max. 500000)
+ 51 words of extra memory for PDF output out of 10000 (max. 10000000)
 
