@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 21.12) (preloaded format=pdflatex 2022.3.6)  9 MAR 2022 08:50
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 21.12) (preloaded format=pdflatex 2022.3.6)  9 MAR 2022 14:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -501,19 +501,16 @@ File: crisp-dm-model.jpg Graphic file (type jpg)
 Package pdftex.def Info: crisp-dm-model.jpg  used on input line 129.
 (pdftex.def)             Requested size: 216.2302pt x 204.65251pt.
  [5 <./crisp-dm-model.jpg>]
-[6] [7] [8] [9] 
+[6] [7] [8] [9] [10] [11] 
 AED: lastpage setting LastPage
-[10] (appunti.aux)
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
+[12] (appunti.aux)
 Package rerunfilecheck Info: File `appunti.out' has not changed.
 (rerunfilecheck)             Checksum: 6510DFB2FD1F30D33E5FCF93688B0DC5;719.
  ) 
 Here is how much of TeX's memory you used:
- 12080 strings out of 478659
- 200171 string characters out of 2845921
- 500731 words of memory out of 3000000
+ 12082 strings out of 478659
+ 200185 string characters out of 2845921
+ 501731 words of memory out of 3000000
  30011 multiletter control sequences out of 15000+600000
  412333 words of font info for 61 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -523,16 +520,18 @@ Here is how much of TeX's memory you used:
 ts/cm/cmbx10.pfb><C:/Users/fedca/AppData/Local/Programs/MiKTeX/fonts/type1/publ
 ic/amsfonts/cm/cmbx12.pfb><C:/Users/fedca/AppData/Local/Programs/MiKTeX/fonts/t
 ype1/public/amsfonts/cm/cmbxti10.pfb><C:/Users/fedca/AppData/Local/Programs/MiK
-TeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/fedca/AppData/Local/Pro
-grams/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/fedca/AppData/L
-ocal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/fedca/A
-ppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users
-/fedca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><
-C:/Users/fedca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmt
-i10.pfb>
-Output written on appunti.pdf (10 pages, 215759 bytes).
+TeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/fedca/AppData/Local/Pro
+grams/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/fedca/AppData/
+Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/fedca/
+AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/User
+s/fedca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb>
+<C:/Users/fedca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cm
+r17.pfb><C:/Users/fedca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfon
+ts/cm/cmsy10.pfb><C:/Users/fedca/AppData/Local/Programs/MiKTeX/fonts/type1/publ
+ic/amsfonts/cm/cmti10.pfb>
+Output written on appunti.pdf (12 pages, 245628 bytes).
 PDF statistics:
- 134 PDF objects out of 1000 (max. 8388607)
- 18 named destinations out of 1000 (max. 500000)
+ 153 PDF objects out of 1000 (max. 8388607)
+ 20 named destinations out of 1000 (max. 500000)
  51 words of extra memory for PDF output out of 10000 (max. 10000000)
 

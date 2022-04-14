@@ -254,6 +254,41 @@ Quando è possibile numerare in qualsiasi modo gli individui di una popolazione,
 
 Quando vogliamo organizzare il nostro campionamento basato sul valore di una o pù variabili, ma non conosciamo l'intervallo o la distribuzione di queste variabili nella popolazione target, possiamo avvalerci del \textbf{two-phase sampling} o campionamento in due fasi. Un campione iniziale può facilitare prendere decisioni più consapevoli sulle strategie di campionamento da utilizzare.
 Un campione iniziale può aiutare a determinare la dimensione del campione. I calcoli delle dimensioni del campione spesso richiedono stime di determinati parametri della popolazione, come la forza della relazione tra due variabili. In assenza di conoscenze e/o dati pregressi, un campione iniziale fornirebbe stime per queste quantità e queste stime determinerebbero la dimensione del campione per il campione della seconda fase.
+
+Una domanda che ci si pone spesso è quanto un campione deve essere grande. In statistica vi sono semplici meccanismi per stimare la dimensione del campione necessaria per avere una certa probabilità di rilevare un effetto di una dimensione pre-specificata o superiore. Questi meccanismi, che raggruppati prendono il nome di analisi di potenza, si basano su stime delle medie e varianze delle variabili nella popolazione da campionare. E' importante capire il sistema di cause che determinano popolazione e garantire che tutte le fonti di variazione siano prese in considerazione. Un gran numero di osservazioni non ha alcun valore se le principali fonti di variazione vengono trascurate nello studio.
+
+Un'alternativa ad impostare una dimensione del campione predeterminata consiste nel lasciare che i dati "scelgano" la dimensione del campione. L'idea di base è continuare ad aumentare la dimensione del campione fino a quando i risultati o i riepiloghi non cambiano più molto (dove "molto" è impostato in anticipo). Le varianti di questa idea sono note come campionamento progressivo, campionamento adattivo o campionamento sequenziale.
+
+Bisogna però far attenzione al fatto che molti degli strumenti comuni per l'inferenza statistica, inclusi i t-test, presuppongono che i dati comprendano un semplice campione casuale di una popolazione e che i singoli punti dati siano quindi statisticamente indipendenti. Molte delle tecniche di campionamento violeranno questa ipotesi. Esistono tecniche statistiche specializzate per trattare i dati generati da un numero qualsiasi di schemi di campionamento complessi. Il campionamento casuale da un database fornisce stime imparziali delle caratteristiche del database. Tuttavia, se il database stesso rappresenta un campione casuale o sistematicamente distorto dalla popolazione reale di interesse, nessuna tecnica statistica può salvare le inferenze risultanti.
+
+I database in tempo reale contengono degli attributi (chiamati anche \textbf{features} o caratteristiche). Il problema della selezione delle caratteristiche sorge perchè la complessità di ricerca nello spazio delle ipotesi deve essere ridotta per ragioni pratiche, e caratteristiche ridondanti o irrilevanti possono avere effetti significativi sulla qualità dei risultati del metodo di analisi (\textbf{maledizione della dimensionalità}). L'idea alla base della maledizione della dimensionalità è che dati di grande dimensione sono difficili da processare, per una serie di motivi: il numero di esempi cresce esponenzialmente con il numero di variabili e non ci sono abbastanza osservazioni per ottenere buone stime.
+
+Il \textbf{feature selection} è un processo che scegli un subset ottimo di features seguendo alcuni criteri. Vi sono sostanzialmente 3 approcci:
+\begin{itemize}
+\item \textbf{wrapper models}
+\item \textbf{filter models}
+\item \textbf{embedded methods}
+\end{itemize}
+Il wrapper model si basa su un algoritmo di data mining per determinare se un sottoinsieme di funzionalità è valido. L'algoritmo viene utilizzato come parte della funzione di valutazione e anche per indurre i patterns o il modello finale. L'algoritmo DM può risolvere task predittivi o task descrittivi. Se vogliamo avere un buon insieme di funzionalità per migliorare l'accuratezza di un classificatore, possiamo utilizzare proprio questa misura per basare le evoluzioni del classificatore. Però sorgono diversi problemi, il principale consiste nel determinare veramente l'accuratezza predittiva evitando l'overfitting. Altri problemi consistono nel fatto che un classificatore richiede tempo per apprendere i dati, oppure i dati sono troppo grandi per eseguire un algoritmo di apprendimento, quindi è necessario ridurne la dimensionalità. Vi è quindi la necessità di definire alcuni criteri di stop per garantire che il processo di valutazione termini e che non entri in un loop infinito.
+
+Il filter models è indipendente dall'algoritmo di data mining che sarà utilizzato sul subset di caratteristiche. I subset sono valutati utilizzando proprietà intrinseche dei dati quali le misure informative e di distanza. Se consideriamo l'accuratezza stimata da un classificatore come un'altra misura, possiamo unificare i modelli di filtro e wrapper in un modello generale. Ogni componente può avere diverse scelte. Le varie combinazioni di queste scelte sono alla base di molti algoritmi di selezione delle caratteristiche esistenti.
+
+Alcune strategie per la selezione delle caratteristiche dei subset sono:
+\begin{itemize}
+\item \textbf{enumerazione} di tutte i possibili subset e selezione dei migliori
+\item \textbf{generazione casuale} dei subset e selezione del migliore.
+\item \textbf{generazione sequenziale} dei subsets.
+\end{itemize}
+Possiamo inoltre selezionare i subset in due modi: \textbf{foward selection}, iniziando con un subset vuoto e gradualmente aggiungere una caratteristica alla volta, o \textbf{backward selection}, nel quale si inizia con un insieme completo e si rimuove una caratteristica alla volta. Queste strategie sono basate sulla \textbf{strategia di ricerca greedy} in uno spazio di subset grande $2^N$, dove N è il numero di caratteristiche.
+
+Indipendentemente dal metodo di generazione dei sottoinsiemi di funzionalità adottato, è necessaria una misura per decidere quale funzionalità deve essere aggiunta o rimossa o quale sottoinsieme deve essere mantenuto. Secondo la \textbf{misura dell'informazione}, data una funzione di incertezza \textbf{U} e le probabilità delle classi precedenti \textbf{P($c_i$)}, l'informazione ottenuta da una caratteristica X, \textbf{IG(X)}, è definita come la differenza tra la precedente incertezza e l'incertezza posteriore attesa usando X. In formula
+\begin{center}
+$IG(X)= \sum_{i} U(P(c_i))-E[\sum_{i}U(P(c_i|X))$
+\end{center}
+Una regola di valutazione delle caratteristiche derivata dal concetto di guadagno di informazioni afferma che la caratteristica X è preferita alla caratteristica Y se $IG(X)>IG(Y)$. Cioè, una caratteristica dovrebbe essere selezionata se può ridurre più incertezza. Se U(x)=$-x*log(x)$ allora $\sum_{i}U(P(c_i))$ è una misura di entropia.
+
+Secondo la misura di distanza se l'obiettivo è la classificazione, una misur alternativa può essere la distanza tra la funzione di densità classe-condizione.  
 \end{document}
+
 
 

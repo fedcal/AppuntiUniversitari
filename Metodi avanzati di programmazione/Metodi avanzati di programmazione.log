@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 21.12) (preloaded format=pdflatex 2022.3.6)  8 MAR 2022 18:11
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 21.12) (preloaded format=pdflatex 2022.3.6)  9 MAR 2022 17:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -453,20 +453,20 @@ LaTeX Info: Redefining \nameref on input line 38.
 \openout4 = `"Metodi avanzati di programmazione.toc"'.
 
  [2] [3] [4] [5] [6] [7] [8] [9]
-[10] [11] [12] [13] [14] [15] [16] [17] [18]
+[10] [11] [12] [13] [14] [15] [16] [17] [18] [19]
 (Metodi avanzati di programmazione.aux)
 Package rerunfilecheck Info: File `"Metodi avanzati di programmazione".out' has
  not changed.
 (rerunfilecheck)             Checksum: A45C167F220363EE5652358B67049232;958.
  ) 
 Here is how much of TeX's memory you used:
- 10707 strings out of 478659
- 172319 string characters out of 2845921
- 491574 words of memory out of 3000000
+ 10708 strings out of 478659
+ 172326 string characters out of 2845921
+ 492574 words of memory out of 3000000
  28650 multiletter control sequences out of 15000+600000
  408841 words of font info for 46 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 60i,13n,63p,992b,433s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 60i,13n,63p,1117b,433s stack positions out of 5000i,500n,10000p,200000b,80000s
  <C:\Users\fedca\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm
 1000.pk><C:/Users/fedca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfon
 ts/cm/cmbx10.pfb><C:/Users/fedca/AppData/Local/Programs/MiKTeX/fonts/type1/publ
@@ -480,10 +480,10 @@ edca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:
 /Users/fedca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.
 pfb><C:/Users/fedca/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/c
 m/cmsy10.pfb>
-Output written on "Metodi avanzati di programmazione.pdf" (18 pages, 181332 byt
+Output written on "Metodi avanzati di programmazione.pdf" (19 pages, 183938 byt
 es).
 PDF statistics:
- 193 PDF objects out of 1000 (max. 8388607)
- 39 named destinations out of 1000 (max. 500000)
+ 198 PDF objects out of 1000 (max. 8388607)
+ 40 named destinations out of 1000 (max. 500000)
  49 words of extra memory for PDF output out of 10000 (max. 10000000)
 
