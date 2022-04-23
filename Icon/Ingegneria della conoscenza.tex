@@ -9,6 +9,18 @@
 \usepackage{longtable}
 \usepackage{caption}
 \usepackage{lastpage}
+\usepackage{adjustbox}
+\usepackage{ellipsis}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{backcolour}{rgb}{0.95,0.95,0.96}
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},
+	numbers=left,
+	numbersep=5pt,
+}
+\lstset{style=mystyle, escapeinside={(*}{*)}}
 
 \setlength{\parindent}{0em}%indentazione paragrafo
 \setlength{\parskip}{1em}%spazio tra paragrafi
@@ -100,9 +112,10 @@ Tipicamente l'informazione è definita in termini di dati, conoscenza in termini
 	\item Sapere (Winsdom)
 \end{itemize}
 
-\begin{figure}[h]
+\begin{figure}[h!]
 \begin{center}
 \includegraphics[scale=.3]{wkid.png}
+\caption{Piramide DIKW}
 \end{center}
 
 \end{figure}
@@ -253,6 +266,13 @@ Nella modalità online invece si rendono disponibili informazioni sulla particol
 
 Sono particolari domini applicativi che possono essere riassunti nel caso della smart house come robot per la consegna, assistente per la diagnostica, sistemi di tutoring o assistente agli acquisti. Un \textbf{inforobot} è un robot che interagisce con un ambiente informativo anzichè fisico. I suoi compiti consistono nell'estrarre informazioni da una rete di sorgenti informative, determinare quale informazione serva per una query e individuare le sorgenti informative, trovare le informazioni necessarie e presentarle in modo utile per l'utente. In input riceve conoscenza pregressa, esperienza passata, le finalità, le osservazioni e le abilità e come output da un info utile alla comprensione da parte dell'utente. Un inforobot deve essere capace di derivare informazione implicita nella base di conoscenza, cercare informazione rilevante in una varietà di basi di conoscenza, trovare buone rappresentazioni della conoscenza, spiegare come sia stata derivata una risposta o perchè alcune informazioni non erano più disponibili.
 \newpage
+\subsection{2 - Spazi di stati e Ricerca di soluzioni}
+Questa sezione fa riferimento al capitolo 3 del libro.
+
+Nel caso più semplice il sistema ragiona su \textbf{un modello} del mondo fatto di stati, in assenza \textbf{di incertezza}, con \textbf{un obiettivo} da raggiungere. Si rappresenta il mondo con una rappresentazione non gerarchica, ovvero una rappresentazione \textbf{piatta}, e si pone come obiettivo quello di trovare la sequenza di passi nello spazio degli stati, partendo dallo stato corrente fino ad un obiettivo. Quindi vi è necessità di astrarre il dominio del problema attraverso la ricerca di un percorso in un grafo orientato, partendo da un nodo di partenza fino a un nodo finale. Vi sono molti algoritmi disponibili che risolvono questo problema, i quali effettuano una computazione all'interno del sistema.
+
+Si definisce \textbf{navigatore} quando si ricerca il miglior percorso in base alla lunghezza (più corto), al tempo di percorrenza (velocità) e il costo (costo minimo). In questo problema si ha anche lo stato che indica la localizzazione corrente dell'oggetto, compresa la velocità e la direzione. Il sistema costruisce una serie di soluzioni parziali.
+\newpage
 \section{Libro}
 
 \subsection{Capitolo 1 - Intelligenza artificiale e agenti}
@@ -318,9 +338,10 @@ Uno dei vantaggi della semplificazione degli ambienti è che può permetterci di
 Un modo in cui le rappresentazioni dell'IA differiscono dai programmi per computer nei linguaggi tradizionali è che una rappresentazione dell'IA in genere specifica cosa deve essere calcolato, non come deve essere calcolato. Potremmo specificare che l'agente dovrebbe trovare la malattia più probabile che ha un paziente, o specificare che un robot dovrebbe prendere il caffè, ma non dare istruzioni dettagliate su come fare queste cose. Gran parte del ragionamento basato sull'IA implica la ricerca nello spazio delle possibilità per determinare come completare un'attività.
 
 
-\begin{figure}[h]
+\begin{figure}[h!]
 \begin{center}
 \includegraphics[scale=.65]{ruoloAgenti.png}
+\caption{Ciclo agente}
 \end{center}
 \end{figure}
 Per risolvere un compito, il progettista di un sistema deve:
@@ -397,10 +418,309 @@ La \textbf{dimensione della rappresentazione} riguarda il modo in cui viene desc
 \item individui e relazioni
 \end{itemize}
 
-A volte un agente può decidere la sua azione migliore abbastanza rapidamente da poter agire. Spesso ci sono limiti di risorse computazionali che impediscono a un agente di eseguire l'azione migliore. Cioè, l'agente potrebbe non essere in grado di trovare l'azione migliore abbastanza rapidamente entro i suoi limiti di memoria per agire mentre quell'azione è ancora la cosa migliore da fare. Spesso, invece, un agente deve scambiare quanto tempo impiega per ottenere una soluzione con quanto è buona la soluzione; potrebbe essere meglio trovare rapidamente una soluzione ragionevole piuttosto che trovare una soluzione migliore in seguito perché il mondo sarà cambiato durante il calcolo.
+A volte un agente può decidere la sua azione migliore abbastanza rapidamente da poter agire. Spesso ci sono limiti di risorse computazionali che impediscono a un agente di eseguire l'azione migliore. Cioè, l'agente potrebbe non essere in grado di trovare l'azione migliore abbastanza rapidamente entro i suoi limiti di memoria per agire mentre quell'azione è ancora la cosa migliore da fare. Spesso, invece, un agente deve scambiare quanto tempo impiega per ottenere una soluzione con quanto è buona la soluzione; potrebbe essere meglio trovare rapidamente una soluzione ragionevole piuttosto che trovare una soluzione migliore in seguito perché il mondo sarà cambiato durante il calcolo. \textbf{La dimensione dei limiti di calcolo} determina se un agente ha \textbf{perfetta razionalità}, in cui un agente ragiona sull'azione migliore senza tener conto delle sue limitate risorse computazionali, o se ha \textbf{razionalità limitata}, in cui un agente decide la migliore azione che può trovare dati i suoi limiti computazionali.
+
+I limiti delle risorse computazionali includono il tempo di calcolo, la memoria e l'accuratezza numerica causati da computer che non rappresentano esattamente i numeri reali. Un algoritmo in qualsiasi momento è un algoritmo in cui la qualità della soluzione migliora nel tempo. In particolare, è uno che può produrre la sua migliore soluzione attuale in qualsiasi momento, ma con più tempo potrebbe produrre soluzioni ancora migliori. Possiamo garantire che la qualità non diminuisca consentendo all'agente di archiviare la migliore soluzione trovata finora e di restituirla quando viene richiesta una soluzione. Sebbene la qualità della soluzione possa aumentare con il tempo, l'attesa per agire ha un costo; potrebbe essere meglio che un agente agisca prima di aver trovato quale sarebbe la soluzione migliore. Per tenere conto della razionalità limitata, un agente deve decidere se agire o ragionare più a lungo. Questo è difficile perché un agente in genere non sa quanto sarebbe meglio se dedicasse solo un po' più di tempo a ragionare. Inoltre, il tempo speso a pensare se dovrebbe ragionare può sminuire il ragionamento effettivo sul dominio.
+
+In alcuni casi, un progettista di un agente può disporre di un buon modello dell'agente e del suo ambiente. Ma spesso un designer non ha un buon modello, quindi un agente dovrebbe usare i dati delle sue esperienze passate e altre fonti per aiutarlo a decidere cosa fare. La \textbf{dimensione dell'apprendimento} determina se la conoscenza è data o la conoscenza viene appresa. L'apprendimento in genere significa trovare il modello migliore che si adatta ai dati. A volte questo è semplice come mettere a punto un insieme fisso di parametri, ma può anche significare scegliere la migliore rappresentazione da una classe di rappresentazioni. L'apprendimento è un campo enorme in sé, ma non è isolato dal resto dell'IA. Ci sono molte questioni oltre l'adattamento dei dati, incluso come incorporare la conoscenza di base, quali dati raccogliere, come rappresentare i dati e le rappresentazioni risultanti, quali pregiudizi di apprendimento sono appropriati e come la conoscenza appresa può essere utilizzata per influenzare il modo in cui l'agente agisce.
+
+Un agente potrebbe presumere che non ci sia incertezza o potrebbe prendere in considerazione l'incertezza nel dominio. L'incertezza è divisa in due dimensioni: una per l'incertezza derivante dal rilevamento e una per l'incertezza sugli effetti delle azioni. In alcuni casi, un agente può osservare direttamente lo stato del mondo. In molti altri casi, può avere solo una percezione rumorosa dello stato e il meglio che può fare è avere una distribuzione di probabilità sull'insieme dei possibili stati in base a ciò che percepisce. La dimensione dell'incertezza di rilevamento riguarda se l'agente può determinare lo stato dagli stimoli:
+\begin{itemize}
+\item \textbf{Completamente osservabile} significa che l'agente conosce lo stato del mondo dagli stimoli
+\item Parzialmente osservabile significa che l'agente non osserva direttamente lo stato del mondo. Ciò si verifica quando molti possibili stati possono dare luogo agli stessi stimoli o quando gli stimoli sono fuorvianti.
+\end{itemize}
+
+Un modello della dinamica del mondo è un modello di come il mondo cambia come risultato delle azioni, o come cambia anche se non c'è azione. In alcuni casi un agente conosce gli effetti della sua azione. Cioè, dato uno stato e un'azione, l'agente può prevedere con precisione lo stato risultante dall'esecuzione di quell'azione in quello stato. Tuttavia, in molti casi, è difficile prevedere gli effetti di un'azione e il meglio che un agente può fare è avere una distribuzione di probabilità sugli effetti. La dinamica nella \textbf{dimensione dell'incertezza dell'effetto} può essere:
+
+\begin{itemize}
+\item \textbf{deterministico} quando lo stato risultante da un'azione è determinato da un'azione e dallo stato precedente
+\item \textbf{stocastico}  quando esiste solo una distribuzione di probabilità sugli stati risultanti.
+\end{itemize}
+
+Questa dimensione ha senso solo quando il mondo è completamente osservabile. Se il mondo è parzialmente osservabile, un sistema stocastico può essere modellato come un sistema deterministico in cui l'effetto di un'azione dipende da qualche caratteristica non osservata. È una dimensione separata perché molti dei quadri sviluppati sono per il caso dell'azione stocastica completamente osservabile.
+
+Gli agenti normalmente agiscono per ottenere risultati migliori. L'unico motivo per scegliere un'azione piuttosto che un'altra è perché l'azione preferita porta a risultati più desiderabili. Un agente può avere un obiettivo semplice, che è una proposizione che l'agente vuole essere vera in uno stato finale. Altri agenti potrebbero avere preferenze più complesse. La \textbf{dimensione delle preferenze} considera se l'agente ha obiettivi o preferenze più ricche:
+
+\begin{itemize}
+\item un obiettivo è un \textbf{obiettivo di realizzazione}, ovvero una proposizione che deve essere vera in uno stato finale, o un \textbf{obiettivo di mantenimento}, ovvero una proposizione che deve essere vera in tutti gli stati visitati.
+\item \textbf{ le preferenze complesse} implicano compromessi tra la desiderabilità di vari risultati anche in momenti diversi. \textbf{Una preferenza ordinale} è dove è importante solo l'ordine delle preferenze. \textbf{Una preferenza cardinale} è dove la grandezza dei valori conta.
+\end{itemize}
+
+Un agente che ragiona su cosa dovrebbe fare in un ambiente in cui è l'unico agente è già abbastanza difficile. Tuttavia, ragionare su cosa fare quando ci sono altri agenti che stanno ragionando è molto più difficile. Un agente in un ambiente multiagente dovrebbe ragionare strategicamente sugli altri agenti; gli altri agenti possono agire per ingannare o manipolare l'agente o possono essere disponibili a collaborare con l'agente. Con più agenti, è spesso ottimale agire in modo casuale perché altri agenti possono sfruttare strategie deterministiche. Anche quando gli agenti stanno cooperando e hanno un obiettivo comune, il compito di coordinamento e comunicazione rende più impegnativo il ragionamento multiagente. Tuttavia, molti domini contengono più agenti e ignorare il ragionamento strategico di altri agenti non è sempre il modo migliore per ragionare per un agente. Dal punto di vista di un singolo agente, \textbf{la dimensione del numero di agenti} considera se l'agente considera esplicitamente altri agenti:
+\begin{itemize}
+\item \textbf{Il ragionamento ad agente singolo} significa che l'agente presume che non ci siano altri agenti nell'ambiente o che tutti gli altri agenti siano parte della natura e quindi non siano finalizzati. Questo è un presupposto ragionevole se non ci sono altri agenti o se gli altri agenti non cambieranno ciò che fanno in base all'azione dell'agente.
+
+\item \textbf{Ragionamento con più agenti} (o ragionamento con più agenti ) significa che l'agente tiene conto del ragionamento di altri agenti. Ciò si verifica quando ci sono altri agenti intelligenti i cui obiettivi o preferenze dipendono, in parte, da ciò che fa l'agente o se l'agente deve comunicare con altri agenti.
+\end{itemize}
+Il ragionamento in presenza di altri agenti è molto più difficile se gli agenti possono agire simultaneamente o se l'ambiente è osservabile solo in parte.
+
+Un agente che vive in un ambiente di solito non ha il lusso di pensare offline mentre il mondo aspetta che consideri l'opzione migliore. Tuttavia, il ragionamento offline, in cui l'agente può ragionare sulla cosa migliore da fare prima di dover agire, è spesso un'ipotesi semplificativa. La dimensione dell'interazione considera se l'agente effettua un \textbf{ragionamento offline} in cui l'agente determina cosa fare prima di interagire con l'ambiente, oppure \textbf{ragionamento online} in cui l'agente deve determinare quale azione fare durante l'interazione nell'ambiente e deve prendere decisioni tempestive. Alcuni degli algoritmi sono semplificati per fare quello che potrebbe essere chiamato puro pensiero, senza interazione con l'ambiente. Gli agenti più sofisticati ragionano mentre agiscono; ciò include il ragionamento strategico a lungo raggio così come il ragionamento per reagire in modo tempestivo all'ambiente.
+
+\subsection{Capitolo 2 - Architetture degli agenti e controllo gerarchico}
+
+\begin{center}
+Per sistema gerarchico, o gerarchia, intendo un sistema che è composto da sottosistemi interconnessi, ciascuno dei quali è a sua volta gerarchico nella struttura fino a raggiungere un livello più basso di sottosistema elementare. Nella maggior parte dei sistemi della natura è in qualche modo arbitrario dove tralasciamo il partizionamento e quali sottosistemi prendiamo come elementari. La fisica fa molto uso del concetto di "particella elementare", sebbene le particelle abbiano una sconcertante tendenza a non rimanere elementari molto a lungo...
+Empiricamente una larga parte dei sistemi complessi che osserviamo in natura mostrano una struttura gerarchica. Su basi teoriche ci aspetteremmo che i sistemi complessi siano gerarchie in un mondo in cui la complessità doveva evolvere dalla semplicità.
+
+Herbert A. Simon
+\end{center}
+
+Questo capitolo mostra come un agente intelligente può percepire, ragionare e agire nel tempo in un ambiente. In particolare, considera la struttura interna di un agente. Come sottolinea Simon nella citazione sopra, la scomposizione gerarchica è una parte importante della progettazione di sistemi complessi come gli agenti intelligenti. Questo capitolo presenta modi per progettare agenti in termini di scomposizioni gerarchiche e modi in cui gli agenti possono essere costruiti, tenendo conto della conoscenza di cui un agente ha bisogno per agire in modo intelligente.
+
+\subsubsection{Agenti}
+Un \textbf{agente} è qualcosa che agisce in un ambiente. Un agente può, ad esempio, essere una persona, un robot, un cane, un verme, una lampada, un programma per computer che compra e vende o una società. Gli agenti interagiscono con l'ambiente con un corpo. Un agente embended ha un corpo fisico. A volte gli agenti che agiscono solo in uno spazio informativo sono chiamati robot o bot , ma li chiamiamo semplicemente agenti. Gli agenti ricevono informazioni attraverso i loro sensori . Le azioni di un agente dipendono dalle informazioni che riceve dai suoi sensori. Questi sensori possono riflettere o meno ciò che è vero nel mondo. I sensori possono essere rumorosi, inaffidabili o rotti e, anche quando i sensori sono affidabili, potrebbero esserci ancora ambiguità sul mondo date le letture dei sensori. Un agente deve agire in base alle informazioni che ha a disposizione. Gli agenti agiscono nel mondo attraverso i loro attuatori , chiamati anche effettori. Gli attuatori possono anche essere rumorosi, inaffidabili, lenti o rotti. Ciò che un agente controlla è il messaggio (comando) che invia ai suoi attuatori. Gli agenti spesso eseguono azioni per trovare maggiori informazioni sul mondo, come aprire la porta di un armadio per scoprire cosa c'è nell'armadio o dare agli studenti un test per determinare le loro conoscenze.
+
+\subsubsection{Sistemi di agenti}
+Un sistema di agenti è costituito da un agente e dall'ambiente in cui agisce. L'agente riceve stimoli dall'ambiente e compie azioni nell'ambiente. Un agente è composto da un ente e da un controllore. Il controllore riceve percezioni dal corpo e invia comandi al corpo. Un corpo comprende sensori che convertono gli stimoli in percetti e attuatori che convertono i comandi in azioni. Gli stimoli includono luce, suono, parole digitate su una tastiera, movimenti del mouse e urti fisici. Gli stimoli possono comprendere anche informazioni ottenute da una pagina web o da un database. I sensori comuni includono sensori tattili, fotocamere, sensori a infrarossi, sonar, microfoni, tastiere, mouse e lettori XML utilizzati per estrarre informazioni dalle pagine Web. Le azioni includono sterzare, accelerare le ruote, spostare i collegamenti delle braccia, parlare, visualizzare informazioni o inviare un comando a un sito Web. Il controllore è il cervello dell'agente. Il resto di questo capitolo riguarda la creazione di controller.
+
+Gli agenti sono situati nel tempo; ricevono dati sensoriali in tempo e compiono azioni in tempo. L'azione che un agente compie in un determinato momento è una funzione dei suoi input . Consideriamo innanzitutto la nozione di tempo. Impostiamo \textit{T} come una variabile contenente un insieme di punti temporali. Assumiamo che \textit{T} è totalmente ordinata e ha una metrica che può essere utilizzata per misurare la distanza temporale tra due punti temporali. Fondamentalmente assumiamo che \textit{T} può essere mappata in subset sulla linea reale. \textit{T} è discreto se ci sono solo un numero finito di punti temporali tra due qualsiasi coppia di punti. \textit{T} è denso se c'è sempre un punto temporale tra ogni coppia di punti, questo implica che ci devono essere infiniti punti temporali tra due punti qualsiasi. Il tempo discreto ha la proprietà che, ogni volta, tranne l'ultima, c'è sempre una successiva. Il tempo denso non ha un successivo. Inizialmente, assumiamo che il tempo sia discreto e vada avanti all'infinito. Quindi per ogni volta c'è una successiva e scriveremo \textit{$t+1$} come la prossima volta di \textit{t}. Supponiamo che \textit{T} ha un punto di partenza che chiameremo arbitrariamente 0, Supponiamo che \textit{P} è l'insieme di tutte le possibili percezioni, una \textbf{traccia di percezione}, o flusso di percezione, è una funzione di \textit{T} in \textit{P} che specifica cosa viene osservato in ogni momento. Supponendo che \textit{C} è l'insieme di tutti i comandi, \textbf{una traccia di comando} è una funzione da \textit{T} in \textit{C} che specifica il comando per ogni punto temporale.
+
+Una traccia di percezione per un agente è quindi la sequenza di tutte le percezioni passate, presenti e future ricevute dal controllore. Una traccia di comando è la sequenza di tutti i comandi passati, presenti e futuri emessi dal controller. I comandi possono essere una funzione della cronologia dei percetti. Questo dà origine al concetto di trasduzione, una funzione da tracce percettive in tracce di comando. Poiché tutti gli agenti sono situati nel tempo, un agente non può effettivamente osservare le tracce percettive complete; in ogni momento ha finora sperimentato solo la parte della traccia. Al tempo \textit{$t \in T$} un agente può solo osservare il valore della traccia al tempo \textit{t}, e i suoi comandi non possono dipendere dalle percezioni dopo il tempo \textit{t}. Una trasduzione è casuale se, a ogni istante \textit{t}, il comando al tempo \textit{t} dipende dalle percezioni fino al tempo \textit{t}. La restrizione di causalità è necessaria perché gli agenti sono situati nel tempo; il loro comando in qualsiasi momento non può dipendere da percezioni future. Un controllore è un'implementazione di una trasduzione causale. La storia di un agente al tempo \textit{t} è una traccia percettiva dell'agente per tutti i tempi prima o al momento \textit{t}. Pertanto, una trasduzione causale mappa la storia dell'agente nel tempo \textit{t} fino al comando nel tempo \textit{t}. Può essere visto come la specifica più generale di un controller. Sebbene una trasduzione causale sia una funzione della storia di un agente, non può essere implementata direttamente perché un agente non ha accesso diretto alla sua intera storia. Ha accesso solo alle sue attuali percezioni e a ciò che ha ricordato.
+
+La memoria o lo stato di credenza di un agente in un determinato momento \textit{t} sono tutte le informazioni che l'agente ha ricordato dalle volte precedenti. Un agente ha accesso solo alla storia che ha codificato nel suo stato di credenza. Pertanto, lo stato di credenza incapsula tutte le informazioni sulla sua storia che l'agente può utilizzare per i comandi attuali e futuri. In qualsiasi momento, un agente ha accesso al suo stato di convinzione e alle sue attuali percezioni. Lo stato di convinzione può contenere qualsiasi informazione, soggetta alla memoria dell'agente e ai limiti di elaborazione. Questa è una nozione molto generale di credenza.Alcuni casi di stato di credenza includono quanto segue:
+\begin{itemize}
+\item Lo stato di convinzione per un agente che sta seguendo una sequenza fissa di istruzioni può essere un contatore di programma che registra la sua posizione corrente nella sequenza.
+\item Lo stato di convinzione può contenere fatti specifici utili. Può essere utile per l'agente ricordare tutte le informazioni di cui potrebbe aver bisogno per il futuro che sono ragionevolmente stabili e che non possono essere immediatamente osservate.
+\item Lo stato di credenza potrebbe codificare un modello o un modello parziale dello stato del mondo. Un agente potrebbe mantenere la sua migliore ipotesi sullo stato attuale del mondo o potrebbe avere una distribuzione di probabilità su possibili stati mondiali.
+\item Lo stato di credenza potrebbe essere una rappresentazione delle dinamiche del mondo e il significato delle sue percezioni. Date le sue percezioni, l'agente potrebbe ragionare su ciò che è vero nel mondo.
+\item Lo stato di convinzione potrebbe codificare ciò che l'agente desidera, gli obiettivi che deve ancora raggiungere, le sue convinzioni sullo stato del mondo e le sue intenzioni o i passi che intende intraprendere per raggiungere i suoi obiettivi. Questi possono essere mantenuti mentre l'agente agisce e osserva il mondo, ad esempio, rimuovendo gli obiettivi raggiunti e sostituendo le intenzioni quando vengono trovati passaggi più appropriati.
+\end{itemize}
+
+Un controllore mantiene lo stato di convinzione dell'agente e determina quale comando emettere in ogni momento. Le informazioni che ha a disposizione quando deve farlo sono il suo stato di convinzione e le sue attuali percezioni. Una funzione di transizione dello stato di credenza per il tempo discreto è una funzione:
+\begin{center}
+$transizione : S \times P \rightarrow S$
+\end{center}
+dove \textit{S} è l'insieme degli stati di credenza e \textit{P} è l'insieme delle possibili percezioni; $S_t+1 = transizione(S_t,p_t)$ significa che $ S_t+1$ è lo stato di credenza che segue lo stato di credenza $S_t$ quando $p_t$ è osservato.
+
+Una funzione di comando è una funzione
+\begin{center}
+$comando: S \times P \rightarrow C$
+\end{center}
+dove \textit{S} è l'insieme degli stati di credenza e \textit{P} è l'insieme delle possibili percezioni e \textit{C} è l'insieme dei possibili comandi; $c_t = comando(S_t,p_t)$ significa che il controllo emette il comando $c_t$ quando lo stato di credenza è $S_t$ e quando $p_t$ è osservato. La funzione di transizione dello stato di credenza e la funzione di comando insieme specificano una trasduzione causale per l'agente. Si noti che una trasduzione causale è una funzione della storia dell'agente, a cui l'agente non ha necessariamente accesso, ma una funzione di comando è una funzione dello stato di credenza e delle percezioni dell'agente, a cui ha accesso.
+
+Se esiste un numero finito di possibili stati di credenza, il controllore è chiamato controllore a stati finiti o macchina a stati finiti . Una rappresentazione fattorizzata è quella in cui gli stati di credenza, le percezioni o i comandi sono definiti da caratteristiche . Se esiste un numero finito di funzioni e ciascuna funzione può avere solo un numero finito di valori possibili, il controller è una macchina a stati finiti fattorizzata . È possibile creare controller più ricchi utilizzando un numero illimitato di valori o un numero illimitato di funzionalità. Un controller che ha un numero illimitato ma numerabile di stati può calcolare tutto ciò che è calcolabile da una macchina di Turing.
+
+\subsubsection{Controllo gerarchico}
+
+Un modo in cui si potrebbe immaginare di costruire un agente è dividere il corpo in sensori e attuatori, con un complesso sistema di percezione che alimenta una descrizione del mondo in un motore di ragionamento che implementa un controller che, a sua volta, emette comandi agli attuatori. Questa risulta essere una cattiva architettura per i sistemi intelligenti. È troppo lento ed è difficile conciliare il ragionamento lento su obiettivi complessi di alto livello con la reazione rapida di cui un agente ha bisogno per attività di livello inferiore come evitare gli ostacoli. Inoltre, non è chiaro che esiste una descrizione di un mondo che sia indipendente da ciò che si fa con esso.
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[scale=.5]{architettura1.png}
+\caption{Architettura interazione tra agenti}
+\end{center}
+\end{figure}
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[scale=.65]{architettura2.png}
+\caption{Architettura interna di un agente}
+\end{center}
+\end{figure}
+Un'architettura di sistema di agenti gerarchici idealizzata. I rettangoli senza etichetta rappresentano i livelli e le linee doppie rappresentano il flusso di informazioni. Le linee tratteggiate mostrano come l'output in una volta sia l'input per la volta successiva. Ogni livello vede gli strati sottostanti come un corpo virtuale da cui riceve le percezioni ea cui invia comandi. L' orizzonte progettualeal livello inferiore è molto più breve dell'orizzonte di pianificazione ai livelli superiori. Gli strati di livello inferiore funzionano molto più velocemente, reagiscono a quegli aspetti del mondo a cui è necessario reagire rapidamente e offrono una visione più semplice del mondo agli strati superiori, nascondendo dettagli che non sono essenziali per gli strati superiori. Le persone devono reagire al mondo, al livello più basso, in frazioni di secondo, ma pianificare al livello più alto anche per decenni nel futuro. Ad esempio, il motivo per frequentare un determinato corso universitario potrebbe essere la carriera a lungo termine.In un controller gerarchico possono esserci più canali, ognuno dei quali rappresenta una caratteristica, tra i livelli e tra i livelli in momenti diversi. Ci sono tre tipi di input per ogni livello alla volta:
+\begin{itemize}
+\item le caratteristiche che provengono dallo stato di credenza, a cui si fa riferimento come valori ricordati o precedenti di queste caratteristiche
+\item le caratteristiche che rappresentano le percezioni dal livello sottostante nella gerarchia
+\item le caratteristiche che rappresentano i comandi dal livello superiore nella gerarchia.
+\end{itemize} 
+
+Ci sono tre tipi di output per ogni lievello alla volta: le percezioni di alto livello del livello superiore, i comandi di basso livello per il livello sottostante e i valori successivi per le caratteristiche dello stato di credenza. Un'implementazione di un livello specifica in che modo gli output di un livello sono una funzione dei suoi input. La definizione della funzione di transizione dello stato di convinzione e della funzione di comando può essere estesa per includere comandi di livello superiore come input e ogni livello richiede anche una funzione di percezione , rappresentata come di seguito . Quindi un livello implementa:
+\begin{center}
+$transizione: S \times P_l \times C_h \rightarrow S$
+
+$comando: S \times P_l \times C_h \rightarrow C_l$
+
+$raccontare: S \times P_l \times C_h \rightarrow P_h$
+\end{center}
+dove \textit{S} è lo stato di credenza, $C_h$ è l'insieme dei comandi del livello superiore, $P_l$ è l'insieme delle percezioni dello strato inferiore, $C_l$ è l'insieme dei comandi per il livello inferiore, $P_h$ è l'insieme delle percezioni per lo strato superiore. Il calcolo di queste funzioni può comportare un calcolo arbitrario, ma l'obiettivo è mantenere ogni livello il più semplice possibile. Per implementare un controller, ogni input a un livello deve ottenere il suo valore da qualche parte. Ogni input di percezione o comando dovrebbe essere collegato a un output di un altro livello. Altri input provengono dalle credenze ricordate. Le uscite di un livello non devono essere collegate a nulla, oppure potrebbero essere collegate a più ingressi. Il ragionamento di alto livello, come svolto negli strati superiori, è spesso discreto e qualitativo, mentre il ragionamento di basso livello, come svolto negli strati inferiori, è spesso continuo e quantitativo (vedi riquadro ). Un controllore che ragiona in termini di valori sia discreti che continui è chiamato sistema ibrido.
+
+Gran parte della scienza e dell'ingegneria considera \textbf{il ragionamento quantitativo} con quantità numeriche, utilizzando il calcolo differenziale e integrale come strumenti principali. \textbf{Il ragionamento qualitativo} è il ragionamento, spesso usando la logica, sulle distinzioni qualitative piuttosto che sui valori numerici per determinati parametri. Il ragionamento qualitativo è importante per una serie di ragioni:
+\begin{itemize}
+\item Un agente potrebbe non sapere quali sono i valori esatti.
+\item Il ragionamento può essere applicabile indipendentemente dai valori quantitativi.
+\item Un agente deve fare un ragionamento qualitativo per determinare quali leggi quantitative sono applicabili.
+\end{itemize}
+Il ragionamento qualitativo utilizza valori discreti, che possono assumere diverse forme:
+\begin{itemize}
+\item I punti di riferimento sono valori che fanno distinzioni qualitative nell'individuo modellato.
+\item Il ragionamento per ordini di grandezza implica un ragionamento approssimativo che ignora le distinzioni minori.
+\item I derivati qualitativi indicano se un valore sta aumentando, diminuendo o rimanendo invariato.
+\end{itemize}
+
+Un agente flessibile ha bisogno di fare ragionamento qualitativo prima di fare ragionamento quantitativo. A volte il ragionamento qualitativo è tutto ciò che serve. Pertanto, un agente non ha sempre bisogno di fare un ragionamento quantitativo, ma a volte ha bisogno di fare sia un ragionamento qualitativo che quantitativo.
+
+\subsubsection{Agire con ragionamento}
+
+Per un agente intelligente, lo stato di credenza può essere complesso, anche per un singolo strato. La definizione di uno stato di credenza è molto generale e non vincola ciò che dovrebbe essere ricordato dall'agente. Spesso è utile che l'agente mantenga qualche modello del mondo, anche se il suo modello è incompleto e impreciso. Un modello di mondo è una rappresentazione dello stato del mondo in un momento particolare e/o delle dinamiche del mondo. Ad un estremo, un modello può essere così valido che l'agente può ignorarne le percezioni. L'agente può quindi determinare cosa fare semplicemente ragionando. Questo approccio richiede un modello sia dello stato del mondo che delle dinamiche del mondo. Dato lo stato in una volta e la dinamica, è possibile prevedere lo stato nella volta successiva. Questo processo è noto come dead reckoning.  Quando il mondo è dinamico o quando ci sono attuatori rumorosi, il rumore si accumula, così che le stime di posizione diventano presto così imprecise che sono inutili. Tuttavia, se il modello è accurato a un certo livello di dettaglio, potrebbe comunque essere utile. All'altro estremo c'è un sistema puramente reattivo che basa le sue azioni sulle percezioni, ma non aggiorna il suo stato di credenza interna. La funzione di comando in questo caso è una funzione dai percetti alle azioni. Un approccio più promettente consiste nel combinare la previsione dell'agente dello stato mondiale con il rilevamento delle informazioni. Questo può assumere diverse forme:
+\begin{itemize}
+\item Se vengono modellati sia il rumore della previsione in avanti che il rumore del sensore, il successivo stato di credenza può essere stimato utilizzando la regola di Bayes. Questo è noto come filtraggio.
+\item Con sensori più complicati come la visione, un modello può essere utilizzato per prevedere dove è possibile trovare le caratteristiche visive, quindi la visione può essere utilizzata per cercare queste caratteristiche vicino alla posizione prevista. Ciò rende il compito di visione molto più semplice e la visione può ridurre notevolmente gli errori di posizione derivanti dalla sola previsione in avanti.
+\end{itemize}
+Un problema di controllo è separabile se è possibile ottenere l'azione migliore trovando prima il miglior modello del mondo e quindi utilizzando quel modello per determinare l'azione migliore. Sfortunatamente, la maggior parte dei problemi di controllo non sono separabili. Ciò significa che l'agente deve considerare più modelli per determinare cosa fare. Di solito, non esiste un "modello migliore" al mondo che sia indipendente da ciò che l'agente farà con il modello.
+
+L'esperienza nello studio e nella costruzione di agenti intelligenti ha dimostrato che un agente intelligente richiede una rappresentazione interna del suo stato di credenza. \textbf{La conoscenza} è l'informazione su un dominio che viene utilizzata per agire in quel dominio. La conoscenza può includere conoscenze generali che possono essere applicate a situazioni particolari, nonché credenze su uno stato specifico. \textbf{Un sistema basato sulla conoscenza} è un sistema che utilizza la conoscenza di un dominio per agire o risolvere problemi. Conoscenza tende a significare informazioni generali e persistenti che vengono considerate vere per un periodo di tempo più lungo. La credenza tende a significare informazioni più transitorie che vengono riviste sulla base di nuove informazioni. Spesso la conoscenza e le credenze vengono con le misure di quanto dovrebbero essere credute. In un sistema di intelligenza artificiale, la conoscenza in genere non è necessariamente vera ed è giustificata solo come utile. La distinzione tra conoscenza e credenza spesso diventa offuscata quando un modulo di un agente può trattare alcune informazioni come vere, ma un altro modulo può essere in grado di rivedere tali informazioni.
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[scale=0.9]{scomposizione.png}
+\caption{Differenza tra stato online e offline}
+\end{center}
+\end{figure}
+
+Una base di conoscenza , KB, viene creata offline da uno studente e viene utilizzata online per determinare le azioni. Questa decomposizione di un agente è ortogonale alla vista a strati di un agente; un agente intelligente richiede sia un'organizzazione gerarchica che basi di conoscenza. \textbf{Online}, quando l'agente agisce, l'agente usa la sua base di conoscenza, le sue osservazioni del mondo, i suoi obiettivi e le sue capacità per scegliere cosa fare e per usare le informazioni appena acquisite per aggiornare la sua base di conoscenza. \textbf{La base di conoscenza} è la \textbf{sua memoria a lungo termine}, dove conserva le conoscenze necessarie per agire in futuro. Questa conoscenza viene appresa da conoscenze pregresse e da dati ed esperienze passate. \textbf{Lo stato di convinzione} è \textbf{la memoria a breve termine} dell'agente, che mantiene il modello dell'ambiente attuale necessario tra le fasi temporali. \textbf{Offline}, prima che l'agente debba agire, l'agente utilizza le conoscenze pregresse e le esperienze passate (le proprie esperienze passate o i dati che gli sono stati forniti) in quello che viene chiamato \textbf{apprendimento} per costruire una base di conoscenza utile per agire online. I ricercatori hanno tradizionalmente considerato il caso che coinvolge molti dati e conoscenze pregresse molto generali, o addirittura non informative, nel campo della statistica. Il caso di una ricca conoscenza pregressa e di pochi o nessun dato da cui apprendere è stato studiato sotto l'ombrello di sistemi esperti . Per la maggior parte dei domini non banali, l'agente ha bisogno di tutte le informazioni disponibili, quindi richiede sia una ricca conoscenza preliminare che osservazioni da cui imparare. Gli obiettivi e le abilità vengono forniti offline, online o entrambi, a seconda dell'agente. Il calcolo online può essere reso più efficiente se la base di conoscenze è ottimizzata per gli obiettivi e le abilità particolari. Questo spesso non è possibile quando gli obiettivi e le abilità sono disponibili solo in fase di esecuzione.
+
+La base di conoscenza richiesta per il calcolo online può essere creata inizialmente in fase di progettazione e quindi aumentata offline dall'agente. Un'ontologia è una teoria su ciò che esiste, o ciò che può esistere, in un particolare dominio. In AI, \textbf{un'ontologia} è una specificazione del significato dei simboli utilizzati in un sistema informativo, dove i simboli si riferiscono a cose che esistono. Un'ontologia specifica ciò che esiste e il vocabolario utilizzato per descrivere ciò che esiste. Nel caso più semplice, se un agente utilizza una rappresentazione esplicita basata sullo stato con piena osservabilità, un'ontologia specifica la mappatura tra lo stato e il mondo. In altri casi, un'ontologia definirebbe le caratteristiche o gli individui e le relazioni. L'ontologia viene logicamente prima dei dati e della conoscenza a priori: abbiamo bisogno di un'ontologia per avere dati o per avere conoscenza. Senza un'ontologia, i dati sono solo sequenze di bit. Senza un'ontologia, un essere umano non sa cosa inserire; è l'ontologia che specifica il significato dei dati. L'ontologia specifica un livello, o livelli, di astrazione. Se l'ontologia cambia, i dati devono cambiare. La base di conoscenza è in genere costruita offline da una combinazione di conoscenze e dati esperti. Un ingegnere della conoscenza è una persona che interagisce con un esperto di dominio per costruire una base di conoscenza. L'ingegnere della conoscenza conosce i sistemi intelligenti, ma non necessariamente il dominio, e l'esperto di dominio conosce il dominio, ma non necessariamente come specificare la conoscenza. Offline, l'agente può combinare le conoscenze degli esperti e tutti i dati disponibili. Ad esempio, può compilare parti della base di conoscenza per consentire un'inferenza più efficiente. Offline, il sistema può essere testato e sottoposto a debug.
+
+Online , le informazioni sulla situazione particolare diventano disponibili e l'agente deve agire. Le informazioni includono le osservazioni del dominio e spesso le preferenze o gli obiettivi. L'agente può ottenere osservazioni da sensori, utenti e altre fonti di informazioni, come siti Web, sebbene in genere non abbia accesso agli esperti di dominio o all'ingegnere della conoscenza durante l'azione. Un agente in genere ha molto più tempo per il calcolo offline che per il calcolo online. Durante il calcolo online può trarre vantaggio da obiettivi particolari e osservazioni particolari. Offline, può acquisire conoscenze su come interagiscono malattie e sintomi ed eseguire il debug e la compilazione. Può solo eseguire il calcolo su un particolare paziente online. Online sono coinvolti i seguenti ruoli:
+\begin{itemize}
+\item  \textbf{Un utente} è una persona che ha bisogno di esperienza o ha informazioni su situazioni individuali. Gli utenti in genere non sono esperti nel dominio della knowledge base. Spesso non sanno quali informazioni sono necessarie al sistema. Pertanto, è irragionevole aspettarsi che si offra volontariamente tutto ciò che è vero su una particolare situazione. Deve essere fornita un'interfaccia semplice e naturale poiché gli utenti in genere non comprendono la struttura interna del sistema. Gli utenti spesso, tuttavia, devono prendere decisioni informate sulla base della raccomandazione del sistema; pertanto, richiedono una spiegazione del motivo per cui la raccomandazione è appropriata.
+\item \textbf{I sensori} forniscono informazioni sull'ambiente. I sensori sono disponibili in due varietà principali. Un sensore passivo fornisce continuamente informazioni all'agente. I sensori passivi includono termometri, fotocamere e microfoni. Il progettista può in genere scegliere dove si trovano i sensori o dove stanno puntando, ma si limitano a fornire le informazioni sull'agente. Al contrario, un sensore attivo è controllato o interrogato per informazioni.
+\item  \textbf{Una fonte di conoscenza esterna}, come un sito Web o un database, potrebbero essere poste domande e può fornire la risposta per un dominio limitato. Un agente può chiedere a un sito Web meteo per la temperatura in un luogo particolare o al sito Web di una compagnia aerea per l'orario di arrivo di un particolare volo. Le fonti di conoscenza hanno vari protocolli e compromessi di efficienza. L'interfaccia tra un agente e una fonte di conoscenza esterna è chiamata wrapper. Un wrapper traduce tra la rappresentazione utilizzata dall'agente e le query che la fonte di conoscenza esterna è pronta a gestire. Spesso i wrapper sono progettati in modo che l'agente sia in grado di porre la stessa query a più fonti di conoscenza
+\end{itemize}
+
+\newpage
+
+\subsection{Capitolo 3 - Ricerca di soluzioni}
+
+\begin{center}
+Hai mai visto un granchio sulla riva che strisciava all'indietro alla ricerca dell'Oceano Atlantico e scompare? Questo è il modo in cui opera la mente dell'uomo.
+
+HL Mencken 
+\end{center}
+
+Il capitolo precedente ha discusso di come un agente percepisce e agisce, ma non di come i suoi obiettivi influenzano le sue azioni. Un agente potrebbe essere programmato per agire nel mondo per raggiungere un obiettivo prefissato o una serie di obiettivi, ma in tal caso non si adatterebbe a obiettivi mutevoli e quindi non sarebbe intelligente. Un agente intelligente ha bisogno di ragionare sulle sue capacità e sui suoi obiettivi per determinare cosa fare. Questo capitolo definisce il problema di un agente che decide come risolvere un obiettivo come il problema della ricerca di un percorso in un grafico. Presenta diversi modi per risolvere tali problemi su un computer.
+
+\subsubsection{Risoluzione dei problemi come ricerca}
+
+Nel caso più semplice in cui un agente decide cosa dovrebbe fare, l'agente ha un modello del mondo basato sullo stato, con un obiettivo da raggiungere e nessuna incertezza. Questa è una rappresentazione piatta (non gerarchica) o un singolo livello di una gerarchia. L'agente è in grado di determinare come raggiungere il suo obiettivo cercando nella sua rappresentazione dello spazio un modo per passare dal suo stato attuale a uno stato che soddisfi il suo obiettivo. Dato un modello completo, cerca di trovare una sequenza di azioni che raggiungano il suo obiettivo prima di dover agire nel mondo. Questo problema può essere astratto dal problema matematico di trovare un percorso dal nodo iniziale a un nodo obiettivo in un grafo orientato.
+
+Trovare il percorso migliore da una posizione corrente a una destinazione è un problema di ricerca. Lo stato include la posizione e possibilmente la direzione di marcia e la velocità. Il miglior percorso potrebbe significare trovare il percorso più breve (a distanza minore), il percorso più veloce, il percorso più economico che tiene conto di tempo, denaro (ad es. carburante e pedaggi) e dell'attrattiva del percorso. Trovare il percorso più breve è generalmente più facile da implementare poiché il calcolo delle distanze da una mappa è generalmente semplice. Trovare il percorso migliore che tenga conto delle altre preferenze che le persone potrebbero avere è complicato. È difficile acquisire queste preferenze e le persone potrebbero non essere nemmeno in grado di articolare queste preferenze e compromessi. Ma date le preferenze, il problema si riduce a quello della ricerca, seppur con una complessa funzione di costo.
+
+Questa nozione di ricerca è un calcolo esclusivamente all'interno dell'agente. È diverso dalla ricerca nel mondo, quando un agente potrebbe dover agire nel mondo, ad esempio un robot che cerca chiavi, solleva cuscini e così via. È anche diverso dalla ricerca sul Web, che implica la ricerca di informazioni indicizzando enormi quantità di dati e cercando di trovare la risposta migliore per ogni query di ricerca. Cercare in questo capitolo significa cercare in una rappresentazione interna un percorso verso un obiettivo. La ricerca è alla base di gran parte dell'intelligenza artificiale. Quando a un agente viene assegnato un problema, di solito gli viene fornita solo una descrizione che gli consente di riconoscere una soluzione, non un algoritmo per risolverlo. Deve cercare una soluzione. L'esistenza di problemi NP-completi , con mezzi efficienti per riconoscere le soluzioni ma senza metodi efficienti per trovarle, indica che la ricerca è una parte necessaria della risoluzione dei problemi.
+
+\subsubsection{Spazio di stato}
+
+Una formulazione generale dell'azione intelligente è in termini di \textbf{spazio di stato}. \textbf{Uno stato} contiene tutte le informazioni necessarie per prevedere gli effetti di un'azione e per determinare se uno stato soddisfa l'obiettivo. La ricerca nello spazio degli stati presuppone:
+
+\begin{itemize}
+\item L'agente ha una perfetta conoscenza dello spazio degli stati e sta pianificando il caso in cui osserva in quale stato si trova: c'è piena osservabilità.
+\item L'agente ha una serie di azioni che hanno effetti deterministici noti.
+\item L'agente può determinare se uno stato soddisfa l'obiettivo.
+\end{itemize}
+\textbf{Una soluzione} è una sequenza di azioni che porterà l'agente dal suo stato attuale a uno stato che soddisfa l'obiettivo. Un problema nello spazio degli stati è costituito da:
+\begin{itemize}
+\item un insieme di stati
+\item uno stato distinto chiamato \textbf{stato iniziale}
+\item per ogni stato, un insieme di azioni disponibili per l'agente in quello stato
+\item \textbf{una funzione di azione} che, dati uno stato e un'azione, restituisce un nuovo stato
+\item \textbf{un obiettivo} specificato come funzione booleana, $obiettivo(S)$, che è vera quando lo stato \textit{S} soddisfa l'obiettivo e in tal caso diciamo che \textit{S} è \textbf{stato obiettivo}.
+\item un criterio che specifica la qualità di una soluzione accettabile. Una soluzione che è la migliore secondo alcuni criteri è chiamata soluzione ottima.
+\end{itemize}
+
+\subsubsection{Ricerca nel grafo}
+il problema di trovare una sequenza di azioni per raggiungere un obiettivo è astratto come la ricerca di percorsi in grafi diretti. Per risolvere un problema, definire prima lo spazio di ricerca sottostante e quindi applicare un algoritmo di ricerca a tale spazio di ricerca. Molte attività di problem solving sono trasformabili nel problema di trovare un percorso in un grafico. La ricerca nei grafici fornisce un modello astratto appropriato di risoluzione dei problemi indipendente da un particolare dominio. Un grafo diretto è costituito da un insieme di nodi e da un insieme di archi diretti tra i nodi. L'idea è di trovare un percorso lungo questi archi dal nodo iniziale a un nodo obiettivo. Nella rappresentazione di un problema nello spazio degli stati, gli stati sono rappresentati come nodi e le azioni come archi. L'astrazione è necessaria perché potrebbe esserci più di un modo per rappresentare un problema come grafico.
+\subsubsection{Formalizzazione della ricerca nei grafici}
+Un \textbf{grafo orientato} è costituito da un insieme di \textit{N} \textbf{nodi} e un insieme \textit{A} di archi, dove \textbf{un arco} è una coppia ordinata di nodi. In questa definizione, un nodo potrebbe essere qualsiasi cosa. Ci possono essere infiniti nodi e archi. Non assumiamo che un grafo sia rappresentato in modo esplicito; richiediamo solo una procedura per generare nodi e archi secondo necessità. L'arco $<n_1 , n_2 >$ è un arco uscente da $n_1$ ed è un arco in arrivo in $n_2$. Un nodo $n_2$ è un vicino di $n_1$ se c'è un arco da $n_1$ a $n_2$; cioè se $< n_1 , n_2 > \in A$. Il concetto di vicinanza è un concetto asimmetrico. Inoltre gli archi possono essere etichettati. Un \textbf{percorso} dal nodo \textit{S} al nodo \textit{g} è una sequenza di nodi $< n_1 , n_2, \dots, n_k >$ tale che $S = n_0 $, $g = n_k$, e $<n_{i-1},n_i> \in A$, cioè, c'è un arco da $n_{i-1}$ a $n_i$. Un \textbf{obiettivo} è una funzione booleana sui nodi. Se $obiettivo(n)$ è vero, diciamo che il nodo \textit{n} soddisfa l'obiettivo, e possiamo definirlo come \textbf{nodo obiettivo}.
+
+A volte c'è un costo associato agli archi. Scriviamo il costo dell'arco $< n_i,n_j>$ come $costo(<n_i,nj>)$. I costi degli archi inducono un costo dei cammini. Dato un percorso $p=<n_0,n_1,\dots,n_k>$ il costo del percorso \textit{p} è la somma dei costi degli archi del percorso:
+\begin{center}
+$costo(p)= \sum_{i=0}^K costo(<n_{i-1},n_i> )$
+\end{center}
+
+Una \textbf{soluzione ottimale} è una delle soluzioni che ha il costo più basso. Cioè, una soluzione ottimale è un percorso \textit{p} dal nodo iniziale a un nodo obiettivo in modo tale che non vi sia alcun percorso $p'$ dal nodo iniziale a un nodo obiettivo dove $costo(p')<costo(p)$. Un \textbf{ciclo} è un percorso non vuoto in cui il nodo finale è lo stesso del nodo iniziale, ovvero $<n_0,n_1,\dots,n_k>$ tale che $n_0=n_k$. Un grafo diretto senza cicli è chiamato \textbf{grafo aciclico diretto (DAG)}. Un \textbf{albero} è un DAG in cui c'è un nodo senza archi in entrata e ogni altro nodo ha esattamente un arco in entrata. Il nodo senza archi in entrata è definito radice dell'albero. Un nodo senza archi uscenti è chiamato foglia. In un albero, i nodi neighboor sono chiamati anche figli. In molti problemi il grafico i ricerca non è fornito in modo esplicito, ma è costruito dinamicamente secondo necessità. Il \textbf{fattore di ramificazione in avanti} di un nodo è il numero di archi in uscita dal nodo. Il \textbf{fattore di ramificazione all'indietro} di un nodo è il numero di archi in ingresso al nodo. Questi fattori forniscono misure per la complessità degli algoritmi dei grafi. 
+
+
+\subsubsection{Algoritmo di ricerca generico}
+
+In questa sezione descriviamo un algoritmo i ricerca generico.
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[scale=0.4]{algoritmoDiRicerca.png}
+\caption{Algoritmo di ricerca generico}
+\end{center}
+\end{figure}
+
+L'idea intuitiva alla base dell'algoritmo di ricerca generico, dato un grafo, un nodo iniziale e un obiettivo, è esplorare i percorsi in modo incrementale dal nodo iniziale. Questo viene fatto mantenendo una frontiera (o frangia ) di percorsi dal nodo iniziale. La frontiera contiene tutti i percorsi che potrebbero formare segmenti iniziali di percorsi dal nodo iniziale a un nodo obiettivo.  Inizialmente, la frontiera contiene il percorso banale contenente solo il nodo iniziale e nessun arco. Man mano che la ricerca procede, la frontiera si espande nei nodi inesplorati fino a quando non si incontra un nodo obiettivo. Diverse strategie di ricerca si ottengono fornendo un'adeguata implementazione della frontiera.
+\begin{lstlisting}
+procedura Cerca(G,S,obiettivo)
+	Input
+	G: grafo con N nodi e A archi
+	S: nodo di partenza
+	obiettivo: funzione booleana di nodi
+	Output
+	percorso da S a un nodo per il quale l'obiettivo e' vero o
+	null se non ci sono percorsi 
+	Locale
+	Frontiera: insieme di percorsi
+	Frontiera ={<S>}
+	 mentre (Frontiera != insieme vuoto ) == false
+	 	seleziona e rimuovi <n0,...,nk> da Frontiera
+	 	se obbiettivo (nk) allora
+	 		ritorno <n0,...,nk>
+	 	Frontiera= Frontiera unito a {<n0,..,nk,n> : <nk,n> appartiene a A}
+	ritorno vuoto
+\end{lstlisting}
+
+La frontiera è un insieme di percorsi. Inizialmente, la frontiera contiene il percorso a costo zero costituito solo dal nodo iniziale. Ad ogni passaggio, l'algoritmo rimuove un percorso $<n_0,...,n_k>$ dalla frontiera. Se $obbiettivo(n_k)$ è vero (cioè $n_k$ è un nodo obiettivo), ha trovato una soluzione e restituisce il percorso $<n_0,...,n_k>$. Altrimenti, il percorso viene esteso di un altro arco trovano i vicini di $n_k$. Per ogni vicino i n di $n_k$, il sentiero $<n_0,...,n_k,n>$ si aggiunge alla frontiera. Questo passaggio è noto come espansione del percorso. Alcune caratteristiche importanti i questo algoritmo sono: \begin{itemize}
+\item Il percorso scelto alla riga 13 determina la strategia di ricerca. La selezione di un percorso può influire sull'efficienza.
+\item E' utile pensare a un valore di ritorno, presente nella riga 15, come un ritorno temporaneo, in cui un chiamante può riprovare la ricerca per ottenere un'altra risposta.
+\item Se la procedura ritorna vuoto, non ci sono soluzioni o non ci sono soluzioni rimanenti se la ricerca è stata ripetuta.
+\item l'algoritmo verifica solo se un percorso termina in un nodo obiettivo dopo che il percorso è stato selezionato dalla frontiera, non quando viene aggiunto ad essa. Ci sono due ragioni importanti per questo. Potrebbe esserci un costoso arco da un nodo sulla frontiera a un nodo obiettivo. La ricerca non dovrebbe sempre restituire il percorso con questo arco, perché potrebbe esistere una soluzione a basso costo. Questo è fondamentale quando è richiesto il percorso più economico. Un secondo motivo è che può essere costoso determinare se un nodo è un nodo obiettivo, quindi questo dovrebbe essere ritardato nel caso in cui il calcolo non sia necessario.
+\end{itemize}
+
+Se il nodo alla fine del percorso selezionato non è un nodo obiettivo e non ha vicini, estendere il percorso significa rimuovere il percorso dalla frontiera. Questo risultato è ragionevole perché questo percorso non può essere parte di un percorso dal nodo iniziale a un nodo obiettivo. 
+
+Di solito, gli algoritmi \textbf{non sono deterministici}, il che significa che ci sono scelte nel programma che non vengono specificate. Esistono due forme di non determinismo:
+\begin{itemize}
+\item \textbf{"don't care non-determinism"}, se una selezione non porta a una soluzione, nemmeno le altre selezioni lo faranno. Il non determinismo non interessa viene utilizzato nell'allocazione delle risorse, in cui si verifica un numero di richieste per un numero limitato di risorse e un algoritmo di pianificazione deve selezionare chi ottiene quale risorsa in ogni momento. La correttezza non dovrebbe essere influenzata dalla selezione, ma l'efficienza e la risoluzione potrebbero esserlo. Quando c'è una sequenza infinita di selezioni, un meccanismo di selezione è giusto se alla fine verrà selezionata una richiesta che è ripetutamente disponibile per essere selezionata. Il problema di un elemento che viene ripetutamente non selezionato è chiamato fame . In questo contesto, un'euristica è una regola pratica che può essere utilizzata per selezionare un valore.
+\item Nel non-determinismo , solo perché una scelta non ha portato a una soluzione non significa che altre scelte non lo faranno. Spesso si parla di un oracolo che potrebbe specificare, in ogni punto, quale scelta porterà a una soluzione. Poiché il nostro agente non ha un tale oracolo, deve cercare nello spazio delle scelte alternative.
+\end{itemize}
+
+\subsubsection{Strategie di ricerca non informate}
+
+Un problema determina il grafico, il nodo iniziale e l'obiettivo ma non quale percorso selezionare dalla frontiera. Questo è il compito di una \textbf{strategia di ricerca}. Una strategia di ricerca definisce l'ordine in cui i percorsi vengono selezionati dalla frontiera. Diverse strategie si ottengono modificando il modo in cui viene attuata la selezione dei percorsi di frontiera. Nelle \textbf{strategie di ricerca non informate} non tengono conto della posizione dell'obiettivo. Questi algoritmi ignorano dove stanno andando finché non trovano un obiettivo e segnalano il successo.
+
+Nella ricerca \textbf{in ampiezza} la frontiera viene implementata come una coda FIFO. Pertanto, il percorso selezionato dalla frontiera è quello che è stato aggiunto per primo. Questo approccio implica che i percorsi dal nodo iniziale siano generati in base al numero di archi nel percorso. Ad ogni iterazione viene selezionato uno dei percorsi con il minor numero di archi.
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[scale=0.5]{ricercaAmpiezza.png}
+\caption{Algoritmo di ricerca in ampiezza}
+\end{center}
+\end{figure}
+
+Supponiamo che il fattore di ramificazione della ricerca sia \textit{b}. Se il prossimo percorso da selezionare sulla frontiera contiene \textit{n} archi, allora ci sono almeno $b^{n-1}$ elementi di frontiera. Tutti questi percorsi contengono \textit{n} o $n+1$ archi. Pertanto, sia la complessità spaziale che temporale sono esponenziali nel numero di archi del percorso verso un obiettivo con il minor numero di archi. Questo metodo è garantito per trovare una soluzione se esiste e troverà una soluzione con il minor numero di archi. La ricerca in ampiezza è utile quando il problema è abbastanza piccolo in modo che lo spazio non sia un problema e si vuole che una soluzione contenga il minor numero di archi. È un metodo scadente quando tutte le soluzioni hanno molti archi o è disponibile una certa conoscenza euristica. Non viene utilizzato molto spesso per problemi di grandi dimensioni in cui il grafo viene generato dinamicamente a causa della sua complessità spaziale esponenziale.
+
+Nella \textbf{ricerca in profondità}, la frontiera si comporta come una pila di percorsi LIFO. In una pila, gli elementi vengono aggiunti e rimossi dalla cima della pila. Usare una pila significa che il percorso selezionato e rimosso dalla frontiera in qualsiasi momento è l'ultimo percorso aggiunto.
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[scale=0.5]{ricercaProfondità.png}
+\caption{Algoritmo di ricerca in profondità}
+\end{center}
+\end{figure}
+
+L'implementazione della frontiera come stack fa sì che i percorsi vengano perseguiti in modo approfondito, cercando un percorso fino al suo completamento prima di provare un percorso alternativo. Si dice che questo metodo implichi il backtracking : l'algoritmo seleziona una prima alternativa su ciascun nodo e torna indietro all'alternativa successiva quando ha perseguito tutti i percorsi dalla prima selezione. Alcuni percorsi possono essere infiniti quando il grafico ha cicli o infiniti nodi, nel qual caso una ricerca in profondità potrebbe non interrompersi mai. Questo algoritmo non specifica l'ordine in cui i percorsi dei vicini vengono aggiunti alla frontiera. L'efficienza dell'algoritmo è sensibile a questo ordinamento. Se c'è una soluzione sul primo ramo cercato, la complessità temporale è lineare nel numero di archi nel percorso. Nel peggiore dei casi, la ricerca in profondità può rimanere intrappolata su rami infiniti e non trovare mai una soluzione, anche se esiste, per grafi infiniti o per grafi con cicli. Se il grafo è un albero finito, con il fattore di ramificazione in avanti minore o uguale a b e tutti i percorsi hanno dall'inizio k o meno archi, il caso peggiore di complessità temporale è $O(b^k)$.
+
+Poiché la ricerca in profondità è sensibile all'ordine in cui i vicini vengono aggiunti alla frontiera, è necessario prestare attenzione a farlo in modo sensato. Questo ordinamento può essere eseguito staticamente (in modo che l'ordine dei vicini sia fisso) o dinamico (dove l'ordine dei vicini dipende dall'obiettivo). La ricerca in profondità è appropriata quando lo spazio è limitato, esistono molte soluzioni o l'ordine in cui i vicini di un nodo vengono aggiunti allo stack può essere ottimizzato in modo da trovare soluzioni al primo tentativo. E' un metodo scadente quando è possibile rimanere intrappolati in percorsi infiniti, cosa che si verifica quando il grafico è infinito o quando ci sono cicli nel grafico, esistono soluzioni a poca profondità, perché in questo caso la ricerca può esplorare molti percorsi lunghi prima di trovare le soluzioni brevi o ci sono più percorsi per un nodo. La ricerca in profondità è la base per una serie di altri algoritmi, come l'approfondimento iterativo.
+
+La ricerca in ampiezza, che garantisce che verrà trovato un percorso, richiede uno spazio esponenziale. La ricerca in profondità potrebbe non interrompersi su grafici infiniti o grafici con cicli. Un modo per combinare l'efficienza spaziale della ricerca in profondità con l'ottimalità della ricerca in ampiezza consiste nell'usare \textbf{l' approfondimento iterativo}. L'idea è di ricalcolare gli elementi della frontiera in ampiezza piuttosto che memorizzarli. Ogni ricalcolo può essere una ricerca in profondità, che quindi utilizza meno spazio. La ricerca iterativa chiama ripetutamente un \textbf{depth-bounded searcher} (ricercatore con limite di profondità), questo accetta un \textbf{depth bound} (limite di profondità) e non esplora mai percorsi con più archi rispetto a questo limite. L'approfondimento iterativo prima esegue una ricerca in profondità fino alla profondità 1 costruendo percorsi di lunghezza 1 in modo approfondito. Se ciò non trova una soluzione, può costruire percorsi alla profondità 2, quindi alla profondità 3 e così via fino a quando non viene trovata una soluzione. Quando una ricerca con limite di profondità n non riesce a trovare una soluzione, può eliminare tutto il calcolo precedente e ricominciare con un limite di profondità di n+1. Alla fine, troverà una soluzione, se esiste, e, poiché enumera i percorsi in base al numero di archi, verrà sempre trovato per primo un percorso con il minor numero di archi.
+
+Per garantire che si fermi per i grafi finiti, la ricerca iterativa di approfondimento deve distinguere tra fallimento perché è stato raggiunto il limite di profondità e fallimento dovuto all'esaurimento dello spazio di ricerca. Nel primo caso, la ricerca deve essere ripetuta con un limite di profondità maggiore. Nel secondo caso, è una perdita di tempo riprovare con un limite di profondità maggiore, perché non esiste alcun percorso, non importa quale sia la profondità, e quindi l'intera ricerca dovrebbe fallire.
+
+\begin{lstlisting}
+procedure ID-Search(G,s,goal)
+	Input
+		G: grafo con N nodi e A archi
+		s: nodo di partenza
+		goal: funzione Booleana sui nodi
+	Output
+		percorso da s a un nodo per il quale il goal e' verificato 
+		o viene restituito il simbolo(* $\bot $ *) per indicare che non vi e' nessun percorso
+	Local
+		hit_depth_bound : Boolean
+		bound: integer
+		procedure Depth_bounded_search((*$<n_0,\dots,n_k>$*),b)
+\end{lstlisting}
 \end{document}
-
-
 
 
 
