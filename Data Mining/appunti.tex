@@ -126,10 +126,11 @@ La maggior parte del lavoro nel KDD è focalizzata sullo step del data mining. A
 
 Il modello di processo CRISP-DM è per la scoperta i conoscenza consiste in sei fasi.
 
+\begin{center}
+
 \fbox{\includegraphics[width=.4\textwidth, height=.3\textheight, keepaspectratio]{crisp-dm-model}}
 
-
-
+\end{center}
 
 La sequenza delle fasi non è rigida. È possibile spostarsi avanti e indietro tra le diverse fasi a seconda dell'esito di ciascuna fase. Le frecce indicano le dipendenze più importanti/frequenti. Il cerchio esterno simboleggia la natura ciclica di un processo KDD che può continuare dopo l'implementazione di una soluzione. Ogni fase contiene un numero di task che produce specifici output.
 \subsubsection{Business Understanding}
@@ -282,12 +283,87 @@ Alcune strategie per la selezione delle caratteristiche dei subset sono:
 Possiamo inoltre selezionare i subset in due modi: \textbf{foward selection}, iniziando con un subset vuoto e gradualmente aggiungere una caratteristica alla volta, o \textbf{backward selection}, nel quale si inizia con un insieme completo e si rimuove una caratteristica alla volta. Queste strategie sono basate sulla \textbf{strategia di ricerca greedy} in uno spazio di subset grande $2^N$, dove N è il numero di caratteristiche.
 
 Indipendentemente dal metodo di generazione dei sottoinsiemi di funzionalità adottato, è necessaria una misura per decidere quale funzionalità deve essere aggiunta o rimossa o quale sottoinsieme deve essere mantenuto. Secondo la \textbf{misura dell'informazione}, data una funzione di incertezza \textbf{U} e le probabilità delle classi precedenti \textbf{P($c_i$)}, l'informazione ottenuta da una caratteristica X, \textbf{IG(X)}, è definita come la differenza tra la precedente incertezza e l'incertezza posteriore attesa usando X. In formula
-\begin{center}
-$IG(X)= \sum_{i} U(P(c_i))-E[\sum_{i}U(P(c_i|X))$
-\end{center}
+\begin{equation}
+IG(X)= \sum_{i} U(P(c_i))-E[\sum_{i}U(P(c_i|X))
+\end{equation}
 Una regola di valutazione delle caratteristiche derivata dal concetto di guadagno di informazioni afferma che la caratteristica X è preferita alla caratteristica Y se $IG(X)>IG(Y)$. Cioè, una caratteristica dovrebbe essere selezionata se può ridurre più incertezza. Se U(x)=$-x*log(x)$ allora $\sum_{i}U(P(c_i))$ è una misura di entropia.
 
-Secondo la misura di distanza se l'obiettivo è la classificazione, una misur alternativa può essere la distanza tra la funzione di densità classe-condizione.  
+\textbf{\textit{Misure della distanza.}} Se l'obiettivo è la classificazione, una misura alternativa può essere la distanza tra le funzioni di densità classe-condizione. Se \textit{P($X|C$)} è la funzione di densità condizionata dalla classe della caratteristica X, nei due casi della clase (C=$c_1$ o C=$c_2$),P($X|C$) è definita da P($X|c_1$) e P($X|c_2$). Se D(X) è la distanza tra P($X|c_1$) e P($X|c_2$), una regola di valutazione basata su P afferma che X è preferito a Y se D(X)$>$D(Y). Questo perchè stiamo cercando una feature che può separare due classi il più possibile. Maggiore è la distanza, più facile separare le due classi.
+
+La divergenza Kullback-Leibler è una misura della distanza tra distribuzioni probabili, P e Q su un dominio V. Questa divergnza è definita come:
+\begin{equation}
+m_{KL}(P,Q)= \sum_{v\in V} q(v)log(\frac {q(v)}{p(v)})
+\end{equation}
+Questa divergenza misura in quale misura la distribuzione P è un'approssimazione della distribuzione Q o, più precisamente, la perdita dell'informazione se noi prendessimo P invece di Q. In sintesi si misura quanto P diverge da Q. LE proprietà di questa misura sono:
+\begin{itemize}
+\item Assimetrica, ovvero $m_{KL}(P,Q) \not = m_{KL}(Q,P)$
+\item non definita quando p(v)=0
+\item nel caso specifico di q(v)=0, q(v)log(q(v)/p(v))=0
+\item il range dei valori non è limitato. Quindi, possiamo utilizzare questo valore per stabilire quale delle due distribuzioni Q e Q' è una migliore approssimazione di P, ma non ci permette di determinare in termini assoluti se Q è una buona approssimazione di P osservando $m_{KL}(P,Q)$
+\end{itemize} 
+
+La divergenza del $\chi ^2$ è definita come:
+\begin{equation}
+m \chi ^2(P,Q) = \sum_{y \in Y} \frac{|p(y)-q(y)|^2}{p(y)}
+\end{equation}
+è rigorosamente topologicamente più forte della divergenza KL data la disuguaglianza $m_{KL}(P,Q) \leq m \chi ^2 (P,Q)$, la convergenza nella funzione di divergenza $\chi ^2$ implica la convergenza nella divergenza KL, ma non il contrario. Inoltre è assimetrica e non definita quando p(y)=0.
+
+Un ultimo tipo di misura della distanza eè la distanza di variazione, data dalla formula $m_1 (P,Q)= \sum_{y \in Y}|p(y)-q(y)|$, detta anche distanza di Manhattan per funzioni di probabilità p(y) e q(y) e coincide con la distanza di Hamming quando tutte le features sono binari. Similarmente si può utilizzare la distanza Euclidea data da $m_2 (P,Q)= \sum_{y \in Y} |p(y)-q(y)|^2$. Queste due metriche soddisfano la proprietà di simmetria e le proprietà metriche.
+
+\textbf{\textit{Dipendenza dalle misure}}. Si verifica con quanta forza una caratteristica è associata alla classe. Denotando attraverso R(X) una misura di dipendenza tra la feature X e la classe C, preferiamo la feature X alla feature Y se R(X)$>$R(Y). Un problema con le tre misure precedenti è che non possono rompere i legami tra due features ugualmente buone. Pertanto queste funzionalità non possono rilevare se una di esse è ridondante.
+
+\textbf{\textit{Inconsistenza delle misure}}. Si tenta di trovare un numero minimo di funzionalità che separano le classi in modo coerente come può fare l'intero set di funzionalità. In altre parole, le misure di incoerenza mirano a raggiungere $P(C|FullSet)= P(C|SubSet)$ Le regole di valutazione delle funzionalità derivate dalle misure di incoerenza affermano che è necessario selezionare il sottoinsieme minimo di funzionalità in grado di mantenere la coerenza dei dati mantenuti dall'insieme completo di funzionalità.
+
+Per \textbf{selezionare le feature} ci sono 3 componenti necessari: un generatore di subset, un valutatore e un criterio di stop. Vi sono diversi metodi. \textbf{\textit{Approcci completi ed esaustivi}}: il \textit{focus} è applicato su una misura di consistenza e valuta esaustivamente tutti i subset partendo da una feature, mentre il \textit{branch and bound} consiste in una enumerazione sistematica di tutte le soluzioni, dove ampi sottoinsiemi di candidati infruttuosi sono scartati in massa utilizzando dei limiti superiori e inferiori della quantità da ottimizzare. Inizia con un insieme completo di feature e valuta l'accuratezza stimata. \textbf{\textit{Approcci Euristici}}: \textbf{\textit{SFS}} (sequential foward search) e \textbf{\textit{SBS}}(sequential backward search) possono essere applicati a ciascuna delle misure, \textbf{\textit{DTM}} è la più semplice versione  di una modalità di weapper - impara un classificatore una volta e usa qualsiasi caratteristica trovata nel classificatore. \textbf{\textit{Approcci non deterministici}}: \textbf{\textit{LVF}} (Las Vegas Filter) e \textbf{\textit{LVW}} (Las Vegas wrapper), generano subset di feature casualmente e li testano in maniera differente, LVF applica una misura inconsistente, LVW usa una stima accurata attraverso un classificatore; \textbf{\textit{algoritmi generici}} e \textbf{\textit{ricottura simulata}} sono anche usati nella selezione di feature. Il primo può produrre più sottoinsiemi, il secondo produce un singolo sottoinsieme. \textbf{\textit{Approcci basati sulle instanze}}: \textbf{\textit{Relief}}, molti piccoli campioni di dati sono campioni proveniente dai dati. Le funzionalità vengono ponderate in base ai loro ruoli nella differenziazione di istanze di classi diverse per un campione di dati. È possibile selezionare funzioni con pesi maggiori. 
+
+Per le attività di data mining non di classificazione (nessuna etichetta di classe disponibile), dovrebbero essere presi in considerazione metodi alternativi. Ad esempio, una misura di entropia può essere introdotta per classificare in sequenza le caratteristiche. L'idea di base è che le caratteristiche sono rilevanti se possono descrivere le istanze in termini di cluster relativamente chiaramente definiti.
+
+La \textbf{scalabilità} è un altro problema. In LVS la parte più dispendiosa in termini di tempo di un processo di selezione delle funzionalità viene identificata e ritardata fino a quando non è necessario. LVS è un'estensione di LVF che utilizza una misura di incoerenza (IC) con una complessità di runtime di controllo O(n), dove n è il numero di istanze. Se n è enorme, è costoso calcolare IC molte volte. Si noti inoltre che il componente di generazione di sottoinsiemi di funzionalità genererà sempre più sottoinsiemi non validi che non soddisfano IC man mano che la cardinalità di un sottoinsieme valido diminuisce. Pertanto, ha senso separare il calcolo di IC come cardinalità per tutti i dati dalla generazione di sottoinsiemi di funzionalità. Ma abbiamo bisogno di dati per generare sottoinsiemi di funzionalità. Il compromesso è che invece di utilizzare l'intero set di dati, ne utilizziamo solo una parte per la generazione di sottoinsiemi di funzionalità. Quando un sottoinsieme viene testato come valido sulla porzione di dati, viene calcolato l'IC per l'intero dato. Successivamente se IC è stato soddisfatto, allora la selezione della feature è completata, altrimenti se IC non è stato soddisfatto, le istanze inconsistenti vengono aggiunte alla porzione di dati e viene eseguito un altro ciclo di generazione di sottoinsiemi di funzionalità sulla porzione di dati ingrandita. Questo metodo è particolarmente efficace solo quando n è sufficientemente largo a causa del sovraccarico nel LVS.
+
+\textbf{Wrapper models} cercano di risolvere uno specifico problema, quindi il criterio può realmente essere specificato. Invece consuma molto tempo se bisogna valutare uno schema a ogni iterata. \textbf{Filter models} sono molto più veloci  ma non incorporano algoritmi di data mining usati per la generazione di un modello o pattern, quindi il modello può essere subottimale.
+
+A differenza dei modelli di filtri e wrapper, nei metodi embedded la parte di selezione delle caratteristiche non può essere separata dall'algoritmo di data mining. È parte integrante dell'algoritmo. Per esempio, nell'algoritmo di decision tree, la selezioni delle caratteristiche che contribuiscono alla creazione dell'albero finale è parte della costruzione dell'algoritmo di decision tree. Poiché siamo interessati a selezionare le funzionalità nella fase di trasformazione dei dati, non consideriamo gli embedded methods.
+
+La \textbf{pulizia dei dati} aumenta la qualità dei dati al livello richiesto. Ciò comporta la selezione di sottoinsiemi di dati puliti, l'inserimento di impostazioni predefinite adeguate o tecniche più ambiziose come la stima della modellazione dei dati mancanti. Alla fine di questa fase vi è un rapporto sulla pulizia dei dati, che descrive le decisioni e le azioni per affrontare i problemi di qualità dei dati ed elenca le trasformazioni dei dati per la pulizia e i possibili impatti sull'analisi dei risultati. I due problemi più comuni sono la mancanza di valori e dati di rumore. I \textbf{dati di rumore} consistono in variabile che hanno valori che non sono conformi con quelli che ci aspettiamo dalle variabili. Le osservazioni in cui si verificano questi valori rumorosi sono chiamate valori anomali (\textit{outliers}). Differenti tipi di outliers possono essere trattati in differenti modi. Vi possono essere errori umani, i quali possono essere corretti o cancellati dall'analisi, oppure le distribuzioni simmetriche spesso indicano valori anomali. La mancanza di dati, invece, include valori che non sono presenti nei dati selezionati e questi valori non validi bisogna eliminarli durante il rilevamento del rumore. Questo caso si verifica se viene commesso un errore durante l'inserimento dei dati, oppure se l'informazione non era disponibile al momento dell'inserimento oppure i dati selezionati all'interno di risorse eterogenee hanno creato dei mismatch. Per correggere questo tipo di errore vengono eseguite diversi tipi di azioni, l'inserimento di un valore predefinito come il termine "none" è l'ideale. Si potrebbe cancellare le righe che presentano valori mancanti, però questa tecnica, per quanto facile da implementare, può generare la perdita di dati che possono essere valutati. Un'altra tecnica consiste nell'eliminazione della variabile dall'analisi se presnta un significativo numero di osservazioni con valori mancanti per la stessa variabile. Infine, un'ultima tecnica, consiste nel rimpiazzare il valore mancante con un altro valore, che nel caso di variabili quantitative può consistere nella media o nella mediana, mentre per le variabili categoriche può essere rappresentato dalla moda o dal valore "sconosciuto". Si potrebbe anche pensare di attuare un approccio più sofisticato è quello di predire il valore più probabile delle variabili all'interno delle osservazioni.
+
+Successivamente si passa alla fase di \textbf{costruzione dei dati}, la quale include operazioni di preparazione dei dati, come la generazione di variabili derivate, inserimento di nuovi record o trasformazione di variabili esistenti. I dati possono essere trasformati in \textit{una singola variabile}, per essere ulteriormente perfezionati per soddisfare i requisiti del formato di input dei particolari algoritmi di data mining da utilizzare. Esempi sono la conversione delle variabili di tipo data dal formato US a quello Europeo, oppure il calcolo dell'età data la data di nascita, l'aggregazione dei valori all'interno di un conto corrente per gli ultimi 3,6,12 mesi. Si può effettuare un ridimensionamento o una normalizzazione dei dati. Si parla di normalizzazione dei dati quando colonne numeriche sono trasformate usando funzioni matematiche in dei range. Questo processo è importante perchè tutte le variabili all'interno di una colonna devono essere trattate in maniera uguale e non devono influenzarsi a vicenda, oppure perchè alcuni dati possono ricevere solo alcuni valori all'interno di un range.
+
+Un altro tipo di normalizzazione è la normalizzazione min-max che performa una transformazione lineare sui dati originali. Supponendo che $ min_A$ e $max_A$ sono i valori di minimo e di massimo di un attributo A, questa normalizzazione mappa un valore v di A in v' nel range $[newMin_A; newMax_A]$ attraverso la formula:
+\begin{equation}
+v'= \frac{v-min_A}{max_A-min_A}(newMax_A - newMin_A)+newMin_A
+\end{equation}
+
+Le relazioni tra i valori dei dati originali vengono preservate. Se un caso di input futuro per la normalizzazione non rientra nell'intervallo di dati originale per A, si verifica un errore "out of bounds" (fuori dal limite).
+
+Nella normalizzazione definita z-score, anche chiamata a media zero), i valori per un attributo A sono normalizzati sulla base della media o della deviazione standard di A. Un valore v di A è normalizzato in v' attraverso la formula:
+\begin{equation}
+v'=\frac{v-mean_A}{standDev_A}
+\end{equation}
+dove $mean_A$ e $standDev_A$ sono la media e la deviazione standard dell'attributo A. Questo metodo di normalizzazione è utile quando il minmo e il massimo dell'attributo A sono sconosciuti, o quando ci sono gli outliers che dominano la normalizzazione min-max.
+
+La normalizzazione attraverso il decimal scaling transforma i valori dell'attributo A in punti decimali, per assicurarsi che il range dell'intervallo i cui essi sono compresi sia \{-1,+1\}. Il numero di punti decimali dipende dal massimo valore assoluto di A. Un valore v di A è normalizzato in v' attraverso la funzione:
+\begin{equation}
+v'= \frac{v}{10^j}
+\end{equation}
+dove j è il più piccolo intero tale che $max(|v'|)<1$
+
+Si parla di discretizzazione delle variabili quando convertiamo variabili quantitative in variabili categoriche dividendo il valore di input in intervalli. Due metodi di discretizzazione sono l'Equale width e l'Equal depth. In entrambi questi metodi le informazioni sulla classe non vengono utilizzate nel caso in cui le osservazioni siano preclassificate, inoltre la discretizzazione viene applica a ogni attributo indipendentemente dagli altri. Il partizionamento attraverso l'equal width divide il range in N intervalli di uguale lunghezza, se A e B sono il più piccolo e il più grande valore all'interno dell'attributo, l'intervallo di width sarà:
+\begin{equation}
+W=\frac{B-A}{N}
+\end{equation}
+Questo metodo è il più diretto, però ha anche degli aspetti negativi perchè non gestisce bene i dati distorti ed è sensibile ai valori anomali.
+
+Il partizionamento attraverso l'equal-depth divide il range in N intervalli, ognuno contenente approssimativamente lo stesso numero di esempi. Questo tipo di partizionamento ha una buona scalabilità, gestisce gli attributi categorici attraverso alcuni trucchetti, minimizza le informazioni perdute durante il processo di partizionamento.
+
+In entrambi i casi il numero di elementi tralasciati è definito dall'utente. Nel caso di classificazione dei dati, è buona pratica che questo numero non sia minore del numero di classi che vogliamo riconoscere, oppure determinarlo attraverso la formula:
+\begin{equation}
+N_{bins} = \frac{M}{3*C}
+\end{equation}
+dove M è il numero di esempi di training e C il numero di classi.
+
+Procedure complesse di conversione di dati hanno l'obiettivo di costruire un piccolo insieme di indici da un vasto numero di variabili, in modo tale che solo alcune informazioni vengano perse e il numero totale di funzioni venga ridotto. L'analisi fattoriale e l'analisi del componente principale sono due tecniche di analisi multivariate per la riduzione dei dati. L'analisi fattoriale affronta il problema dell'analisi della struttura delle interrelazioni (correlazioni) tra un GRANDE numero di variabili (ad es. punteggi dei test, elementi del test, risposte al questionario) definendo un insieme di dimensioni sottostanti comuni, note come fattori. Questa non è una tecnica che usa dipendenze, ovvero non vi è nessuna variabile considerata come criterio o variabile dipendente da cui tutte le altre dipendono e sono le variabili predittore o indipendenti. E' una tecnica interdipendente in cui ogni variabile è considerata simultaneamente e ognuna è in relazione alle altre.
+
+Oltre alla costruzione dei dati, vi è l'integrazione dei dati, che ha come obiettivo la combinazione di informazioni provenienti da tabelle multiple o record per creare nuovi record o valori. L'output di questa fase è un insieme di dati uniti, che si riferisce all'unione di due o più tabelle unite che contengono differenti informazioni sugli stessi oggetti, o dati aggregati, sui quali verranno effettuate delle operazioni per produrre nuovi dati. Il risultato è il modello dei dati analitici, che rappresenta una ristrutturazione consolidata, integrata e dipendente dal tempo dei dati selezionati e preelaborati dalle varie fonti operative ed esterne. Una decisione importante presa in questo compito riguarda l'unità di analisi. Nella ricerca nelle scienze sociali, le unità di analisi più tipiche sono le persone individuali. Altre unità di analisi possono essere gruppi, manufatti (libri, foto, giornali), unità geografiche (città, censimento, stato), interazioni sociali (relazioni diadiche, divorzi, arresti).
 \end{document}
 
 

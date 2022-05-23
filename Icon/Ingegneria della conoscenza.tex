@@ -13,6 +13,7 @@
 \usepackage{ellipsis}
 \usepackage{listings}
 \usepackage{xcolor}
+\usepackage{mathtools}
 
 \definecolor{backcolour}{rgb}{0.95,0.95,0.96}
 \lstdefinestyle{mystyle}{
@@ -708,18 +709,125 @@ Per garantire che si fermi per i grafi finiti, la ricerca iterativa di approfond
 
 \begin{lstlisting}
 procedure ID-Search(G,s,goal)
-	Input
-		G: grafo con N nodi e A archi
-		s: nodo di partenza
-		goal: funzione Booleana sui nodi
-	Output
-		percorso da s a un nodo per il quale il goal e' verificato 
-		o viene restituito il simbolo(* $\bot $ *) per indicare che non vi e' nessun percorso
-	Local
-		hit_depth_bound : Boolean
-		bound: integer
-		procedure Depth_bounded_search((*$<n_0,\dots,n_k>$*),b)
+Input
+	G: grafo con N nodi e A archi
+	s: nodo di partenza
+	goal: funzione Booleana sui nodi
+Output
+	percorso da s a un nodo per il quale il goal e' verificato 
+	o viene restituito il simbolo(* $\bot $ *) per indicare che non vi e' nessun percorso
+Local
+	hit_depth_bound : Boolean
+	bound: integer
+	procedure Depth_bounded_search((*$<n_0,\dots,n_k>$*),b)
+	
+		Input
+		(*$<n_0,\dots,n_k>$*): il percorso
+		b: nomero intero maggiore di 0
+		
+		Output
+		percorso verso la meta di lunghezza K+b se ne esiste uno
+		
+		se (*$b>0$*)
+			allora per ogni (*$arco<n_K,n> \in A$*)
+			 res:= DEpth_bounded_search( (* $ <n_0,...,n_k,n> $ *),b-1)
+			 se res e' un percorso allora
+			 	ritorna res
+			 altrimenti se obiettivo((*$n_k$*) allora
+			 	ritorna (*$<n_0,...,n_k>$*)
+			 altrimenti se (*$n_k$*) ha dei vicini allora
+			 	hit_depth_bound:= true
+			bound:=0
+		repeat
+			hit_depth_bound :=false
+			res:= Depth_bounded_search((*$<s>$*),bound)
+			se res e' un percorso allora
+				ritorna res
+			bound = bound+1
+	until not hit_depth_bound
+		
 \end{lstlisting}
+
+Questo é lo pseudocodice per la ricerca di approfondimento iterativo, ID-Search. La procedura locale Depth-bounded-search implementa una ricerca in profondita' limitata alla profondita' (usando la ricorsione per mantenere lo stack) che pone un limite alla lunghezza dei percorsi per i quali sta cercando. Restituisce un percorso o raggiunge la fine del suo codice e ritorna senza percorso. Utilizza una ricerca in profondità per trovare percorsi di lunghezza K+b, dove K é la lunghezza del percorso dato dall'inizio e b é un numero intero non negativo. Il ricercatore iterativo di approfondimento chiama Depth-bounded-search per aumentare i limiti di profondita'. Questo programma trova i percorsi dei nodi obiettivo nello stesso ordine della ricerca in ampiezza, Ha solo bisogno di controllare un obiettivo quando b=0, perché sa che non ci sono soluzioni per i limiti inferiori.
+
+Per garantire che la ricerca di approfondimento iterativo fallisca ogni volta che la ricerca in ampiezza fallisce, é necessario tenere traccia di quando l'aumento del limite potrebbe aiutare a trovare una risposta. Una ricerca con limite di profondità fallisce naturalmente – fallisce esaurendo lo spazio di ricerca – se la ricerca non ha tagliato alcun percorso a causa del limite di profondità. In questo caso, il programma può arrestarsi e non segnalare percorsi. Questo viene gestito tramite la variabile hit-depth-bound nello pseudocodice , che è falsa quando Depth-bounded-searchviene chiamato inizialmente e diventa vero se la ricerca viene eliminata a causa del limite di profondità. Se é vero alla fine di una ricerca con limite di profondità, la ricerca non è riuscita a causa del raggiungimento del limite di profondità, quindi é possibile aumentare il limite di profondità e viene eseguita un'altra ricerca con limite di profondità.
+
+L'ovvio problema con l'approfondimento iterativo é il calcolo sprecato che si verifica ad ogni passaggio. Questo, tuttavia, potrebbe non essere così grave come si potrebbe pensare, in particolare se il fattore di ramificazione é elevato. Considera il tempo di esecuzione dell'algoritmo. Assumiamo un fattore di ramificazione costante di $b>1$. Considera la ricerca dove si trova il limite K. In profondità K, ci sono $b^K$ nodi; ognuno di questi é stato generato una volta, i nodi in profondità k-1 sono stati generati due volte, quelli in profondità K-2 sono stati generati tre volte, e cos via, e i nodi in profondità 1 sono stati generati K volte. Pertanto il numero di percorsi espansi é:
+\begin{center}
+$b^K\left(\frac{b}{b-1}\right)^2$
+\end{center}
+
+Per molti domini, gli archi hanno costi non unitari e l'obiettivo è trovare una soluzione ottimale , una soluzione tale che nessun'altra soluzione abbia un costo totale inferiore. Il ricercatore dovrebbe cercare di ridurre al minimo il costo totale del percorso trovato verso un obiettivo. Gli algoritmi di ricerca finora considerati non sono garantiti per trovare i percorsi di costo minimo; non hanno utilizzato affatto le informazioni sui costi dell'arco. La ricerca in ampiezza trova una soluzione con il minor numero di archi per primi, ma la distribuzione dei costi dell'arco può essere tale che un percorso con il minor numero di archi non sia di costo minimo. Il metodo di ricerca più semplice garantito per trovare un percorso di costo minimo é il \textbf{lowest-cost-first search}, che é simile alla ricerca in ampiezza, ma invece di espandere un percorso con il minor numero di archi, seleziona un percorso con il più basso costo. Ciò viene implementato trattando la frontiera come una coda prioritaria ordinata dalla funzione di costo. 
+
+Se i costi degli archi sono tutti maggiori di una costante positiva (costi dell'arco limitato) e il fattore di ramificazione é finito, la ricerca del costo più basso é garantita per trovare una soluzione ottimale – una soluzione con il costo del percorso più basso – se una soluzione esiste. Inoltre, il primo percorso verso un obiettivo che viene ampliato é un percorso con il costo più basso. Tale soluzione é ottimale, perché l'algoritmo espande i percorsi dal nodo iniziale in ordine di costo del percorso. Se esistesse un percorso migliore per raggiungere un obiettivo rispetto alla prima soluzione trovata, sarebbe stato ampliato prima dalla frontiera. Il costo dell'arco limitato viene utilizzato per garantire che la ricerca al minor costo trovi una soluzione, quando esiste, nei grafici con fattore di ramificazione finito. Senza tale limite ci possono essere infiniti cammini con un costo finito. Ad esempio, potrebbero esserci dei nodi $n_0,n_1,n_2,...,n_K$ con un arco $<n_{i-1},n_i>$ per ciascun $i>0$ con costo 1/$2^i$. Infiniti percorsi della forma $<n_0,n_1,n_2,...,n_k>$ hanno un costo inferiore a 1, non verrà mai selezionato un percorso. Questa è la base del paradosso di Zenone. Come la ricerca in ampiezza, la ricerca in base al costo più basso é in genere esponenziale sia nello spazio che nel tempo. Genera fin dall'inizio tutti i percorsi che hanno un costo inferiore al costo di una soluzione.
+
+I metodi di ricerca nella sezione precedente sono disinformati (o ciechi) in quanto non tengono conto dell'obiettivo fino a quando non espandono un percorso che conduce a un nodo che soddisfa l'obiettivo. Le informazioni euristiche su quali nodi sono più promettenti possono guidare la ricerca cambiando quale nodo é selezionato. Una \textbf{funzione euristica} \textit{h(n)}, prende un nodo \textit{n} e restituisce un numero reale non negativo che é una stima del costo del percorso a costo minimo dal nodo n a un nodo obiettivo. La funzione h(n) é \textbf{un'euristica ammissibile} se h(n) è sempre inferiore o uguale al costo effettivo di un percorso dal costo più basso dal nodo n a un obiettivo. Deve utilizzare solo le informazioni che possono essere prontamente ottenute su un nodo. In genere esiste un compromesso tra la quantità di lavoro necessaria per calcolare un valore euristico per un nodo e l'accuratezza del valore euristico. Un modo standard per derivare una funzione euristica è risolvere un problema più semplice e utilizzare il costo per l'obiettivo nel problema semplificato come funzione euristica del problema originale.
+
+La funzione h può essere estesa per essere applicabile ai cammini rendendo il valore euristico di un percorso uguale al valore euristico del nodo alla fine del percorso. Ciò significa:
+\begin{center}
+$h(<n_0,...,n_k>)=h(n_k)$
+\end{center}
+
+Un semplice uso di una funzione euristica nella ricerca in profondità consiste nell'ordinare i neighbors che vengono aggiunti allo stack che rappresenta la frontiera. I neighbors possono essere aggiunti alla frontiera in modo che venga selezionato per primo il miglior neighbor. Questo è noto come ricerca euristica in profondità. Questa ricerca seleziona il percorso migliore a livello locale, ma esplora tutti i percorsi dal percorso selezionato prima di selezionare un altro percorso. Sebbene sia usato spesso, soffre dei problemi della ricerca in profondità e non è garantito che trovi una soluzione e potrebbe non trovare una soluzione ottimale. Un altro modo per utilizzare una funzione euristica è selezionare sempre un percorso sulla frontiera con il valore euristico più basso. Questo è chiamato greedy best-first search. Questo metodo a volte funziona bene. Tuttavia, può seguire percorsi che sembrano promettenti perché appaiono (secondo la funzione euristica) vicini all'obiettivo, ma il percorso esplorato potrebbe continuare ad allungarsi.
+
+La \textbf{ricerca A*} usa il costo del percorso come ricerca in profondità del percorso con il minor costo, e informazioni euristiche, come ricerca greedy best-first. Per ogni percorso sulla frontiera, A* usa un estimatore del costo totale del percorso dal nodo di partenza al nodo obiettivo vincolato a seguire inizialmente quel percorso. Utilizza la funzione costo(p), il costo del percorso trovato, come una funzione euristica h(p), il costo stimato del percorso dalla fine di p all'obiettivo. Per ogni percorso sulla frontiera, definisce $f(p)=costo(p)+h(p)$ come stimatore del costo totale del percorso da p a l nodo obiettivo. S
+\[
+f(x)=\underbrace{\underbrace{start\xrightarrow{\text{actual}}}_{\text{cost(p)}}\underbrace{n\xrightarrow{\text{estimate}}goal}_{\text{h(p)}}}_{\text{f(p)}}
+\]
+
+Se h(n) è un'euristica ammissibile e quindi non sopravvaluta mai il costo del nodo n a un nodo obiettivo, quindi f(p) non sovrastima il costo del percorso per passare dal nodo iniziale a uno obiettivo tramite p. A* viene implementato utilizzando l'algoritmo di ricerca generico, trattando la frontiera come una coda di priorità ordinata da f(p). Un algoritmo di ricerca è \textbf{ammissibile} se, ogni volta che esiste una soluzione, restituisce una soluzione ottima. Per garantire l'ammissibilità, devono valere alcune condizioni sul grafico e sull'euristica. Il seguente teorema fornisce condizioni sufficienti per A* essere ammissibile.
+
+\textbf{Proposizione ammissibilità di A*}
+\begin{center}
+Se c'è una soluzione, usando la funzione euristica h, A* restituisce sempre una soluzione ottima, se:
+\begin{itemize}
+\item il fattore di ramificazione è finito (ogni nodo ha un numero limitato di vicini),
+\item tutti i costi dell'arco sono maggiori di $\epsilon >0$, e
+\item h è un'euristica ammissibile, ovvero che h(n) è minore o uguale al costo attuale del percorso con il costo minore dal nodo n al nodo obiettivo.
+\end{itemize}
+\end{center}
+
+Un'euristica ammissibile è una funzione non negativa h di nodi, dove h(n) non è mai maggiore del costo effettivo del percorso più breve dal nodo n a un obiettivo. Il modo standard per costruire una funzione euristica è trovare una soluzione a un problema più semplice, che è uno con meno vincoli. Un problema con meno vincoli è spesso più facile da risolvere (e talvolta banale da risolvere). Una soluzione ottimale al problema più semplice non può avere un costo maggiore di una soluzione ottimale al problema completo perché qualsiasi soluzione al problema completo è una soluzione al problema più semplice. In molti problemi spaziali in cui il costo è la distanza e la soluzione è vincolata a percorrere archi predefiniti (ad es. segmenti stradali), la distanza euclidea in linea retta tra due nodi è un'euristica ammissibile perché è la soluzione al problema più semplice in cui il l'agente non è costretto a passare attraverso gli archi.  Una volta che il problema è stato semplificato, potrebbe essere risolto utilizzando la ricerca, che dovrebbe essere più semplice del problema originale. Nota che il problema della ricerca più semplice deve essere risolto più volte, forse anche per tutti i nodi. Spesso è utile memorizzare nella cache questi risultati in un database di pattern che mappa i nodi del problema più semplice nel valore euristico. Nel problema più semplice, ci sono spesso meno nodi e quindi più nodi originali vengono mappati in un singolo nodo più semplice, quindi questo potrebbe essere fattibile.
+
+\subsubsection{Sfoltimento dello spazio di ricerca}
+
+Gli algoritmi precedenti possono essere migliorati tenendo conto di più percorsi verso un nodo. Consideriamo due strategie di potatura. La strategia più semplice è potare i cicli; se l'obiettivo è trovare un percorso a minor costo, non serve considerare percorsi con cicli. L'altra strategia consiste nel considerare sempre un percorso verso un nodo e sfoltire altri percorsi verso quel nodo.
+
+Un grafico che rappresenta uno spazio di ricerca può includere cicli. Alcuni dei suddetti metodi di ricerca possono rimanere intrappolati in cicli, ripetendo continuamente il ciclo e non trovando mai una risposta nemmeno in grafici finiti. Gli altri metodi possono scorrere ciclicamente, facendo perdere tempo, ma alla fine trovano comunque una soluzione. Un metodo semplice per sfoltire la ricerca, pur garantendo che una soluzione venga trovata in un grafo finito, consiste nell'assicurarsi che l'algoritmo non consideri i vicini che sono già sul percorso dall'inizio. L'eliminazione del ciclo o l'eliminazione del loop controlla se l'ultimo nodo sul percorso è già presente in precedenza nel percorso dal nodo iniziale a quel nodo. Percorsi come $<n_0,...,n_k,n>$ dove $n\in \{n_0,...,n_k\}$ non sono aggiunti alla frontiera o sono scartati quando sono rimossi da essa.
+
+La complessità computazionale del ciclo di potatura dipende dal metodo di ricerca utilizzato. Per i metodi depth-first, l'overhead può essere basso quanto un fattore costante, memorizzando gli elementi del percorso corrente come un insieme (ad esempio, mantenendo un bit che è impostato quando il nodo è nel percorso, o usando un hash funzione). Per le strategie di ricerca che mantengono percorsi multipli, ovvero tutti quelli con spazio esponenziale, la potatura del ciclo richiede tempo lineare nella lunghezza del percorso cercato. Questi algoritmi non possono fare di meglio che cercare il percorso parziale considerato, verificando che non aggiungano un nodo che appare già nel percorso.
+
+Spesso c'è più di un percorso verso un nodo. Se è richiesto un solo percorso, un algoritmo di ricerca può eliminare dalla frontiera qualsiasi percorso che conduca a un nodo a cui ha già trovato un percorso. \textbf{L'eliminazione di più percorsi} viene implementata mantenendo un insieme esplorato (tradizionalmente chiamato elenco chiuso ) di nodi che si trovano alla fine dei percorsi che sono stati espansi. L'insieme esplorato è inizialmente vuoto. Quando un percorso $<n_0,...,n_k>$ è selezionato, se $n_k$ è già nel set esplorato, il percorso può essere scartato. Altrimenti, $n_k$ viene aggiunto all'insieme esplorato e l'algoritmo procede come prima.Questo approccio non garantisce necessariamente che il percorso meno costoso non venga scartato. Potrebbe essere necessario fare qualcosa di più sofisticato per garantire che venga trovata una soluzione ottimale. Per garantire che l'algoritmo di ricerca possa ancora trovare un percorso con il costo più basso verso un obiettivo, è possibile eseguire una delle seguenti operazioni:
+\begin{itemize}
+\item Assicurarsi che il primo percorso trovto per qualsiasi nodo sia un percorso con il costo pi basso per quel nodo, quindi eliminare tutti i percorsi successivi trovati per quel nodo
+\item Se l'algoritmo di ricerca trova un percorso di costo inferiore per un nodo rispetto a uno già trovato, potrebbe rimuovere tutti i percorsi che hanno utilizzato il percorso di costo pi elevato per il nodo.
+\item Ogni volta che la ricerca trova un percorso per un nodo a un costo inferiore rispetto a un percorso per quel nodo già trovato, potrebbe incorporare una nuova sezione iniziale sui percorsi che hanno esteso il percorso iniziale.
+\end{itemize}
+
+La prima di queste alternative consente l'utilizzo dell'insieme esplorato senza perdere la capacità di trovare un percorso ottimale. Gli altri richiedono algoritmi più sofisticati.
+
+Nella ricerca al costo più basso, il primo percorso trovato verso un nodo (cioè, quando il nodo è selezionato dalla frontiera) è il percorso verso il nodo con il costo più basso. L'eliminazione dei percorsi successivi a quel nodo non può rimuovere un percorso a basso costo per quel nodo e quindi l'eliminazione dei percorsi successivi a ciascun nodo consente comunque di trovare una soluzione ottimale.
+
+A* non garantisce che quando un percorso verso un nodo viene selezionato per la prima volta sia il percorso con il costo più basso per quel nodo. Si noti che il teorema di ammissibilità garantisce questo per ogni percorso verso un nodo obiettivo ma non per ogni percorso verso qualsiasi nodo. Se vale per tutti i nodi dipende dalle proprietà della funzione euristica. \textbf{Un' euristica coerente} è una funzione non negativa h(n) sul nodo n che soddisfa il vincolo $h(n)\leq costo(n,n')+h(n')$ per due nodi qualsiasi n' e n, dove costo(n,,n') è il costo del percorso meno costoso da n a n'. Nota che se h(g)=0 per qualsiasi obiettivo g, un'euristica coerente non è mai una sopravvalutazione del costo del passaggio da un nodo n a un obiettivo. La coerenza può essere garantita se la funzione euristica soddisfa \textbf{la restrizione monotona}: $h(n) \leq costo(n,n')+h(n')$ per qualsiasi arco <n,n'>. E' più semplice controllare la restrizione della monotonia poichè dipende solo dagli archi, mentre la coerenza dipende da tutte le coppie di nodi.
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[scale=0.9]{disuguaglianzaTriangolare.png}
+\caption{Disuguaglianza triangolare}
+\end{center}
+\end{figure}
+
+La coerenza e la restrizione monotona possono essere intese in termini di disuguaglianza triangolare , che specifica che la lunghezza di qualsiasi lato di un triangolo non può essere maggiore della somma delle lunghezze degli altri due lati. In coerenza, il costo stimato per andare da n all'obiettivo non dovrebbe essere superiore al costo stimato per raggiungere prima n' e poi l'obiettivo. La funzione euristica della distanza euclidea (la distanza in linea retta in uno spazio euclideo multidimensionale) tra due punti quando la funzione di costo è distanza è coerente. Anche una funzione euristica che è una soluzione a un problema semplificato con soluzioni più brevi è in genere coerente.
+
+\textbf{Proposizione}
+\begin{center}
+Con un'euristica consistente, la potatura multipla di percorso non può mai prevenire un ricerca A* dal trovare una soluzione ottima.
+\end{center}
+
+Quindi la ricerca A* include la potatura a più percorsi, s A* viene utilizzato senza potatura a più percorsi, la mancanza di potatura dovrebbe essere esplicitata. Spetta al progettista di una funzione euristica garantire che l'euristica sia coerente, in modo da trovare un percorso ottimale. L'eliminazione di più percorsi include l'eliminazione del ciclo, perché un ciclo è un altro percorso verso un nodo e pertanto viene eliminato. L'eliminazione di più percorsi può essere eseguita in tempo costante, impostando un bit su ciascun nodo a cui è stato trovato un percorso se il grafico è memorizzato in modo esplicito o utilizzando una funzione hash. La potatura a più percorsi è preferibile alla potatura a ciclo per i metodi in ampiezza in cui praticamente tutti i nodi considerati devono essere comunque archiviati. La ricerca in profondità non deve memorizzare tutti i nodi alla fine dei percorsi già espansi; la loro memorizzazione per implementare la potatura a più percorsi rende la ricerca in profondità esponenziale nello spazio. Per questo motivo, la potatura del ciclo è preferita alla potatura a più percorsi per la ricerca in profondità.
+
+La potatura di più percorsi non è appropriata per IDA*, perché lo spazio richiesto per archiviare il set esplorato è in genere superiore allo spazio richiesto per A*, vanificando così lo scopo dell'approfondimento iterativo. È possibile utilizzare la potatura ad anello IDA*.
+
+FARE QUESTA SEZIONE https://artint.info/2e/html/ArtInt2e.Ch3.S8.html
 \end{document}
 
 

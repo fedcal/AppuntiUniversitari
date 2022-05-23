@@ -24,3 +24,4 @@
 \contentsline {subsubsection}{\numberline {2.3.4}Formalizzazione della ricerca nei grafici}{33}{subsubsection.2.3.4}%
 \contentsline {subsubsection}{\numberline {2.3.5}Algoritmo di ricerca generico}{34}{subsubsection.2.3.5}%
 \contentsline {subsubsection}{\numberline {2.3.6}Strategie di ricerca non informate}{36}{subsubsection.2.3.6}%
+\contentsline {subsubsection}{\numberline {2.3.7}Sfoltimento dello spazio di ricerca}{41}{subsubsection.2.3.7}%
